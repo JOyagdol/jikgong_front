@@ -7,18 +7,68 @@ $w.onReady(function () {
     // To select an element by ID use: $w('#elementID')
 
     // Click 'Preview' to run your code
-    $w('#button8').onMouseIn( (event) => {
+    //button 8 확정
+
+    $w('#section3').collapse();
+    $w('#section4').collapse();
+
+    $w('#button8').onClick( (event) => {
         const clickedElement = event.target;
         clickedElement.style.color = "#FD5521";
         clickedElement.style.borderColor = "#FD5521";
-        console.log(clickedElement.id);
+
+        $w('#button9').style.color = "#C7C7C7";
+        $w('#button9').style.borderColor = "#C7C7C7";
+
+        $w('#button10').style.color = "#C7C7C7";
+        $w('#button10').style.borderColor = "#C7C7C7";
+
+        $w('#section1').expand();
+        $w('#section3').collapse();
+        $w('#section4').collapse();
+
+        console.log(clickedElement.id,"onclick");
     })
 
-    $w('#button8').onMouseOut( (event) => {
+    //button 9 예약
+
+    $w('#button9').onClick( (event) => {
         const clickedElement = event.target;
-        clickedElement.style.color = "#C7C7C7";
-        clickedElement.style.borderColor = "#C7C7C7";
-        console.log(clickedElement.id);
+        clickedElement.style.color = "#FD5521";
+        clickedElement.style.borderColor = "#FD5521";
+
+        $w('#button8').style.color = "#C7C7C7";
+        $w('#button8').style.borderColor = "#C7C7C7";
+
+        $w('#button10').style.color = "#C7C7C7";
+        $w('#button10').style.borderColor = "#C7C7C7";
+
+        $w('#section1').collapse();
+        $w('#section3').expand();
+        $w('#section4').collapse();
+
+        console.log(clickedElement.id,"onclick");
     })
+
+    //button 10 마감
+
+    $w('#button10').onClick( (event) => {
+        const clickedElement = event.target;
+        clickedElement.style.color = "#FD5521";
+        clickedElement.style.borderColor = "#FD5521";
+
+        $w('#button8').style.color = "#C7C7C7";
+        $w('#button8').style.borderColor = "#C7C7C7";
+
+        $w('#button9').style.color = "#C7C7C7";
+        $w('#button9').style.borderColor = "#C7C7C7";
+
+        $w('#section1').collapse();
+        $w('#section3').collapse();
+        $w('#section4').expand();
+
+        console.log(clickedElement.id,"onclick");
+    })
+
 
 });
