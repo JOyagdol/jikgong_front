@@ -4,6 +4,7 @@ package.json이 존재하는 dir 에서 "wix dev" 커맨드 실행
 
 [ 깃 브랜치 동기화 ]
 git fetch --all --prune
+git pull origin main
 
 [ 깃 간단 업로드 ]
 git add .
