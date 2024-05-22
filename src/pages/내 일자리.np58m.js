@@ -1,7 +1,5 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
-import { getGreetings } from 'backend/dataFetcher';
-
 $w.onReady(function () {
     // Write your JavaScript here
 
@@ -9,13 +7,6 @@ $w.onReady(function () {
 
     // Click 'Preview' to run your code
     //button 8 확정
-
-    // const fetchedData = getGreetings();
-    // const repeaterData = fetchedData.map(item => {
-    //     item._id = item.id.toString();
-    //     return item;
-    // });
-    // console.log(repeaterData);
 
     $w('#section3').collapse();
     $w('#section4').collapse();
