@@ -1,0 +1,6 @@
+import { fetch, getJSON } from 'wix-fetch';
+
+export async function getGreetings() {
+    const response = await getJSON('http://43.203.86.121/api/job-post/worker/list');
+    return response;
+}
