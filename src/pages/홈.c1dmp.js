@@ -1,15 +1,11 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
-import { getGreetings } from 'backend/dataFetcher';
+import { getDataWithGetMethod } from "backend/dataFetcher";
 
 $w.onReady(async function () {
-    console.log('df')
-    // Write your JavaScript here
-
-    // To select an element by ID use: $w('#elementID')
-
-    // Click 'Preview' to run your code
-
-    const fetchedData = await getGreetings();
-    console.log(fetchedData);
+    const { data, message } = await getDataWithGetMethod({
+      url: "http://43.203.86.121/api/job-post/worker/list",
+    });
+    console.log(message);
+    console.log(data.content);
 });
