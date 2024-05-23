@@ -22,16 +22,17 @@ import { getDataWithGetMethod } from "backend/dataFetcher";
 
 $w.onReady(async function () {
   // 기존 데이터 초기화 + 데이터 받아오기
+  initRepeater()
   initData()
   // 데이터 할당 시작
-  initRepeater()
 });
 
 async function initData(){
     $w("#listRepeater").data = []
-    const { data, message } = await getDataWithGetMethod({
+    var { data, message } = await getDataWithGetMethod({
     url: "http://43.203.86.121/api/job-post/worker/list",
   });
+  console.log(data.content);
   $w("#listRepeater").data = data;
 }
 
@@ -39,6 +40,7 @@ function initRepeater() {
   $w("#listRepeater").onItemReady(($item, itemData, index) => {
     initItemTitle($item, itemData)
     initItemBackground($item, itemData)
+    initItemSelectionTag($item, itemData)
   });
 }
 
@@ -48,6 +50,10 @@ function initItemTitle($item, itemData) {
 
 function initItemBackground($item, itemData) {
   $item("#image1").style.background = itemData.thumbnailS3Url;
+}
+
+function initItemSelectionTag($item, itemData) {
+  $item("#selectionTags5").elipsisText = itemData.meal
 }
 
 // function initItemDescription($item, itemData, itemIndex) {
