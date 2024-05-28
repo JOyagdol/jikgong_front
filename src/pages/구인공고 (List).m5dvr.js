@@ -48,8 +48,8 @@ async function render(){
 function initRepeater() {
   $w("#listRepeater").onItemReady(($item, itemData, index) => {
     initItemTitle($item, itemData)
-    initItemBackground($item, itemData)
     initItemSelectionTag($item, itemData)
+    initItemBackground($item, itemData)
   });
 }
 
@@ -58,7 +58,7 @@ function initItemTitle($item, itemData) {
 }
 
 function initItemBackground($item, itemData) {
-  $item("#image1").style.background = itemData.thumbnailS3Url;
+  $item("#image1").background.src = itemData.thumbnailS3Url;
 }
 
 function initItemSelectionTag($item, itemData) {
