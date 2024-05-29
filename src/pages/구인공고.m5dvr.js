@@ -27,15 +27,6 @@ $w.onReady(async function () {
   initComponents()
   render()
   // 데이터 할당 시작
-  $w("#MoreButton").link = "https://pool021224.wixsite.com/my-site/" // courses-2/"
-  $w('#MoreButton').onClick( (event) => {
-    const clickedElement = event.target;
-    $w("#MoreButton").link;
-    clickedElement.style.color = "#ffffff";
-    clickedElement.style.borderColor = "#FD5521";
-
-    console.log(clickedElement.id,"onclick");
-  })
 });
 
 function initComponents() {
@@ -65,6 +56,7 @@ function initRepeater() {
     initItemTitle($item, itemData)
     initItemDeadlinePP($item, itemData)
     initItemConvenienceTag($item, itemData)
+    initItemButtion($item, itemData)
   });
 }
 
@@ -108,6 +100,11 @@ function initItemOccupationTag($item, itemData) {
     {'label':'토목','value':`${itemData.occupation["civil"]}`}, 
     {'label':'전기','value':`${itemData.occupation["electricity"]}`}, 
   ]
+}
+
+function initItemButtion($item, itemData) {
+  $item("#MoreButton").link = `/my-site/courses-2&${itemData}`
+  console.log($item("#MoreButton").link)
 }
 
 
