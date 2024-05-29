@@ -1,4 +1,5 @@
 import { getDataWithGetMethod } from "backend/dataFetcher";
+import wixLocation from 'wix-location-frontend';
     //  content body
       // {
       //   "jobPostId": 1,
@@ -43,7 +44,6 @@ async function render(){
     data.content[i].dlPP = `${i+1}`
     data.content[i].occupation = `${{"civil" : true, "electricity" : true}}`
   }
-  console.log(data.content)
   $w("#listRepeater").data = []
   $w("#listRepeater").data = data.content;
 }
@@ -103,8 +103,9 @@ function initItemOccupationTag($item, itemData) {
 }
 
 function initItemButtion($item, itemData) {
-  $item("#MoreButton").link = `/my-site/courses-2&${itemData}`
-  console.log($item("#MoreButton").link)
+  $item("#MoreButton").onClick(() => {
+    wixLocation.to(`/courses-2?id=${itemData._id}`);
+  })
 }
 
 
