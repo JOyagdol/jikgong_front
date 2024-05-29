@@ -17,7 +17,8 @@ import { getDataWithGetMethod } from "backend/dataFetcher";
       //   "companyName": "삼성",
       //   "wage": 150000,
       //   "isScrap": null,
-      //   "thumbnailS3Url": "https://jikgong-resize-bucket.s3.ap-northeast-2.amazonaws.com/jobPost/thumbnail_3c8f0d5f-7fce-4c12-8b4f-475dedafe7db.jpg"
+      //   "thumbnailS3Url": "https://jikgong-resize-bucket.s3.ap-northeast-2.amazonaws.com/jobPost/thumbnail_3c8f0d5f-7fce-4c12-8b4f-475dedafe7db.jpg",
+      //   "occupation : { "civil" : true, "electricity" : true }
       // },
 
 $w.onReady(async function () {
@@ -26,6 +27,15 @@ $w.onReady(async function () {
   initComponents()
   render()
   // 데이터 할당 시작
+  $w("#MoreButton").link = "https://pool021224.wixsite.com/my-site/" // courses-2/"
+  $w('#MoreButton').onClick( (event) => {
+    const clickedElement = event.target;
+    $w("#MoreButton").link;
+    clickedElement.style.color = "#ffffff";
+    clickedElement.style.borderColor = "#FD5521";
+
+    console.log(clickedElement.id,"onclick");
+  })
 });
 
 function initComponents() {
@@ -39,6 +49,8 @@ async function render(){
   });
   for(let i=0;i < data.content.length;i++) {
     data.content[i]._id = `${i+1}`
+    data.content[i].dlPP = `${i+1}`
+    data.content[i].occupation = `${{"civil" : true, "electricity" : true}}`
   }
   console.log(data.content)
   $w("#listRepeater").data = []
@@ -47,11 +59,15 @@ async function render(){
 
 function initRepeater() {
   $w("#listRepeater").onItemReady(($item, itemData, index) => {
+    //initItemBackground($item, itemData)
+    initItemWorkingDate($item, itemData)
+    initItemOccupationTag($item, itemData)
     initItemTitle($item, itemData)
-    initItemSelectionTag($item, itemData)
-    initItemBackground($item, itemData)
+    initItemDeadlinePP($item, itemData)
+    initItemConvenienceTag($item, itemData)
   });
 }
+
 
 function initItemTitle($item, itemData) {
   $item("#text13").text = itemData.title;
@@ -61,13 +77,39 @@ function initItemBackground($item, itemData) {
   $item("#image1").background.src = itemData.thumbnailS3Url;
 }
 
-function initItemSelectionTag($item, itemData) {
-  console.log(itemData.meal, itemData.pickup)
-  $item("#selectionTags5").options = [
-    {'label':'meal','value':`${itemData.meal}`}, 
-    {'label':'pickup','value':`${itemData.pickup}`}
+function initItemConvenienceTag($item, itemData) {
+  //console.log(itemData.meal, itemData.pickup)
+  if(itemData.meal == true && itemData.pickup == true)
+    $item("#selectionTags5").options = [
+      {'label':'식사','value':`${itemData.meal}`},
+      {'label':'픽업버스','value':`${itemData.pickup}`}
+    ]
+  else if(itemData.pickup == true)
+    $item("#selectionTags5").options = [
+      {'label':'픽업버스','value':`${itemData.pickup}`}
+    ]
+  else if(itemData.meal == true)
+    $item("#selectionTags5").options = [
+      {'label':'식사','value':`${itemData.meal}`}
+    ]  
+}
+
+function initItemDeadlinePP($item, itemData) {
+  $item("#text7").text = itemData.dlPP;
+}
+
+function initItemWorkingDate($item, itemData) {
+  $item("#text2").text = itemData.startDate + " ~ " + itemData.endDate;
+}
+
+function initItemOccupationTag($item, itemData) {
+  //console.log(itemData.meal, itemData.pickup)
+  $item("#selectionTags4").options = [
+    {'label':'토목','value':`${itemData.occupation["civil"]}`}, 
+    {'label':'전기','value':`${itemData.occupation["electricity"]}`}, 
   ]
 }
+
 
 // function initItemDescription($item, itemData, itemIndex) {
 //   const itemDescription = itemData.description;
