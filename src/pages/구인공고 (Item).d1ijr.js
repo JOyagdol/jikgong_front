@@ -1,64 +1,114 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
 //  content body
-      // {
-      //   "jobPostId": 1,
-      //   "tech": "NORMAL",
-      //   "recruitNum": 60,
-      //   "title": "사하구  낙동5블럭  낙동강 온도 측정 센터 신축공사",
-      //   "meal": true,
-      //   "pickup": true,
-      //   "park": "FREE",
-      //   "startDate": "2024-07-01",
-      //   "endDate": "2024-07-02",
-      //   "startTime": "18:00:00",
-      //   "endTime": "18:00:00",
-      //   "address": "부산광역시 사하구 낙동대로 550번길 37",
-      //   "distance": null,
-      //   "companyName": "삼성",
-      //   "wage": 150000,
-      //   "isScrap": null,
-      //   "thumbnailS3Url": "https://jikgong-resize-bucket.s3.ap-northeast-2.amazonaws.com/jobPost/thumbnail_3c8f0d5f-7fce-4c12-8b4f-475dedafe7db.jpg"
-      // },
-
+// {
+//   "data": {
+//     "jobPostId": 2,
+//     "title": "부산 강서구 명지동 빌리브 명시 듀클래스",
+//     "tech": "NORMAL",
+//     "startTime": "09:30:00",
+//     "endTime": "18:00:00",
+//     "workAddress": "부산 강서구 명지동 3605-6",
+//     "distance": null,
+//     "meal": false,
+//     "pickup": true,
+//     "pickupAddressList": [
+//       "부산광역시 사하구 낙동대로 550번길 37",
+//       "대한민국 부산광역시 서구 구덕로 225"
+//     ],
+//     "park": "FREE",
+//     "parkDetail": "2번 GateWay 옆 공간",
+//     "preparation": "작업복, 작업화",
+//     "workDateResponseList": [
+//       {
+//         "workDateId": 3,
+//         "date": "2024-08-01"
+//       },
+//       {
+//         "workDateId": 4,
+//         "date": "2024-08-02"
+//       }
+//     ],
+//     "companyName": "삼성",
+//     "manager": "이재용",
+//     "phone": "01012345678",
+//     "imageUrls": []
+//   },
+//   "message": "모집 공고 상세 화면 - 일반 반환 완료"
+// }
 
 import wixLocation from 'wix-location-frontend';
+import wixWindow from 'wix-window-frontend';
 import { getDataWithGetMethod } from "backend/dataFetcher";
 
 $w.onReady(async function () {
     // Write your JavaScript here
     const query = wixLocation.query;
+    const url = "http://43.203.86.121/api/job-post/worker/2"//+`${query.jobPostId}`
     var { data, message } = await getDataWithGetMethod({
-        url: "http://43.203.86.121/api/job-post/worker/list",
+        url: url,
       });
-    for(let i=0;i < data.content.length;i++) {
-      data.content[i]._id = `${i+1}`
-      data.content[i].dlPP = `${i+1}`
-      data.content[i].occupation = `${{"civil" : true, "electricity" : true}}`
-    }
-    
-    const itemData = data.content[Number(query.id)-1] 
+
+    console.log(data);
     
     // title
-    $w("#title").text = itemData.title
-    
+    $w("#title").text = data.title
+    $w("#text134").text = data.title
+
     // 근무 환경
     var sectionTag = []
-    if(itemData.pickup == true)
-      sectionTag.push( {'label':'픽업버스','value':`${itemData.pickup}`})
-    else if(itemData.meal == true)
-      sectionTag.push( {'label':'식사','value':`${itemData.meal}`})
+    if(data.pickup == true)
+      sectionTag.push( {'label':'픽업버스','value':`${data.pickup}`})
+    if(data.meal == true)
+      sectionTag.push( {'label':'식사','value':`${data.meal}`})
+    if(data.park == "FREE")
+      sectionTag.push( {'label':'주차무료','value':`${data.park}`})
     $w("#selectionTags4").options = sectionTag
+    $w("#selectionTags1").options = sectionTag
     
     // 모집 인원
-    $w("#text1").text = itemData.dlPP;
+    $w("#text127").text = `${0}`;
+    $w("#text1").text = `${0}`;
 
     // 노동 기간
-    $w("#text2").text = itemData.startDate + " ~ " + itemData.endDate;
+    var startDate = data.workDateResponseList[0].date
+    var endDate = data.workDateResponseList[data.workDateResponseList.length-1].date
+    $w("#text2").text = startDate + " ~ \n" + endDate;
+    $w("#text128").text = startDate + " ~ \n" + endDate;
 
     // 직종
-    $w("#selectionTags3").options = [
-      {'label':'토목','value':`${itemData.occupation["civil"]}`}, 
-      {'label':'전기','value':`${itemData.occupation["electricity"]}`}, 
-    ]
+    if (data.tech == "NORMAL") {
+      $w("#selectionTags3").options = [
+        {'label':'보통인부','value':`${data.tech}`}, 
+      ]
+      $w("#selectionTags2").options = [
+        {'label':'보통인부','value':`${data.tech}`}, 
+      ]
+    }
+      
+    else if (data.tech == "TILE") {
+      $w("#selectionTags2").options = [
+        {'label':'타일','value':`${data.tech}`}, 
+      ]
+      $w("#selectionTags3").options = [
+        {'label':'타일','value':`${data.tech}`}, 
+      ]
+    }
+      
+    //작업 장소
+    $w("#text129").text = data.workAddress
+
+
+    //픽업 장소
+    $w("#text133").text = ""
+    var pickupAddressList = data.pickupAddressList
+    for(let i=0;i<pickupAddressList.length;i++) {
+      var pickupText = $w("#text133").text
+      $w("#text133").text =pickupText + "\n" + pickupAddressList[i]
+    }
+
+    var lightBoxData = {'title':`${data.title}`}
+    $w("#button1").onClick(() => {
+      wixWindow.openLightbox("지원하기",lightBoxData)
+    })
 });

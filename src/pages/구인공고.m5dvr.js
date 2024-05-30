@@ -51,8 +51,9 @@ async function render(){
 function initRepeater() {
   $w("#listRepeater").onItemReady(($item, itemData, index) => {
     //initItemBackground($item, itemData)
+
     initItemWorkingDate($item, itemData)
-    initItemOccupationTag($item, itemData)
+    initItemTechTag($item, itemData)
     initItemTitle($item, itemData)
     initItemDeadlinePP($item, itemData)
     initItemConvenienceTag($item, itemData)
@@ -71,40 +72,37 @@ function initItemBackground($item, itemData) {
 
 function initItemConvenienceTag($item, itemData) {
   //console.log(itemData.meal, itemData.pickup)
-  if(itemData.meal == true && itemData.pickup == true)
-    $item("#selectionTags5").options = [
-      {'label':'식사','value':`${itemData.meal}`},
-      {'label':'픽업버스','value':`${itemData.pickup}`}
-    ]
-  else if(itemData.pickup == true)
-    $item("#selectionTags5").options = [
-      {'label':'픽업버스','value':`${itemData.pickup}`}
-    ]
-  else if(itemData.meal == true)
-    $item("#selectionTags5").options = [
-      {'label':'식사','value':`${itemData.meal}`}
-    ]  
+  var sectionTag = []
+  if(itemData.pickup == true)
+    sectionTag.push( {'label':'픽업버스','value':`${itemData.pickup}`})
+  if(itemData.meal == true)
+    sectionTag.push( {'label':'식사','value':`${itemData.meal}`})
+  $item("#selectionTags4").options = sectionTag
 }
 
 function initItemDeadlinePP($item, itemData) {
-  $item("#text7").text = itemData.dlPP;
+  $item("#text7").text = `${0}`;
 }
 
 function initItemWorkingDate($item, itemData) {
   $item("#text2").text = itemData.startDate + " ~ " + itemData.endDate;
 }
 
-function initItemOccupationTag($item, itemData) {
+function initItemTechTag($item, itemData) {
   //console.log(itemData.meal, itemData.pickup)
-  $item("#selectionTags4").options = [
-    {'label':'토목','value':`${itemData.occupation["civil"]}`}, 
-    {'label':'전기','value':`${itemData.occupation["electricity"]}`}, 
-  ]
+  if (itemData.tech == "NORMAL")
+    $item("#selectionTags5").options = [
+      {'label':'보통인부','value':`${itemData.tech}`}, 
+    ]
+  else if (itemData.tech == "TILE")
+    $item("#selectionTags5").options = [
+      {'label':'타일','value':`${itemData.tech}`}, 
+    ]
 }
 
 function initItemButtion($item, itemData) {
   $item("#MoreButton").onClick(() => {
-    wixLocation.to(`/courses-2?id=${itemData._id}`);
+    wixLocation.to(`/courses-2?jobPostId=${itemData.jobPostId}`);
   })
 }
 
