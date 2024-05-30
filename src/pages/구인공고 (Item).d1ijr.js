@@ -40,6 +40,7 @@
 import wixLocation from 'wix-location-frontend';
 import wixWindow from 'wix-window-frontend';
 import { getDataWithGetMethod } from "backend/dataFetcher";
+import { getApiKey } from "backend/apikey";
 
 $w.onReady(async function () {
     // Write your JavaScript here
@@ -48,8 +49,6 @@ $w.onReady(async function () {
     var { data, message } = await getDataWithGetMethod({
         url: url,
       });
-
-    console.log(data);
     
     // title
     $w("#title").text = data.title
@@ -97,14 +96,24 @@ $w.onReady(async function () {
       
     //작업 장소
     $w("#text129").text = data.workAddress
-
+    // 지도
+    const mapUrl = `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(data.workAddress)}`
+    const kakaoApiKey = getApiKey()
+    const mapResponse = await fetch(mapUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `KakaoAK ${kakaoApiKey}`
+      }
+    })
+    const mapdata = await mapResponse.json();
+    console.log(mapdata)
 
     //픽업 장소
     $w("#text133").text = ""
     var pickupAddressList = data.pickupAddressList
     for(let i=0;i<pickupAddressList.length;i++) {
       var pickupText = $w("#text133").text
-      $w("#text133").text =pickupText + "\n" + pickupAddressList[i]
+      $w("#text133").text = pickupText + "\n" + pickupAddressList[i]
     }
 
     var lightBoxData = {'title':`${data.title}`}
