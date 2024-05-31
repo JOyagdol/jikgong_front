@@ -1,0 +1,9 @@
+import {sendWithService} from 'backend/sendGrid';
+
+export function sendEmail(subject, body) {
+    const key = ""
+    const sender = "from.email@domain.com"
+    const recipient = "to.email@domain.com"
+    return sendWithService(key, sender, recipient, subject, body)
+    // https://limejuicer.tistory.com/1732 참조
+}

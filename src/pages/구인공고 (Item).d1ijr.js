@@ -40,7 +40,7 @@
 import wixLocation from 'wix-location-frontend';
 import wixWindow from 'wix-window-frontend';
 import { getDataWithGetMethod } from "backend/dataFetcher";
-import { getApiKey } from "backend/apikey";
+import { getApiKey, kakaoApiKey } from "backend/apikey.jsw";
 
 $w.onReady(async function () {
     // Write your JavaScript here
@@ -98,15 +98,24 @@ $w.onReady(async function () {
     $w("#text129").text = data.workAddress
     // 지도
     const mapUrl = `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(data.workAddress)}`
-    const kakaoApiKey = getApiKey()
+    const ApiKey = await getApiKey() //"483e4425efc50d6891881bece6845a9e"
     const mapResponse = await fetch(mapUrl, {
       method: "GET",
       headers: {
-        Authorization: `KakaoAK ${kakaoApiKey}`
+        'Authorization': `KakaoAK ${ApiKey}`
       }
     })
     const mapdata = await mapResponse.json();
-    console.log(mapdata)
+    if (mapdata.documents && mapdata.documents.length > 0) {
+      const { x, y, description } = mapdata.documents[0];
+      $w("#googleMaps1").location = {
+        "latitude": y*1,
+        "longitude": x*1,
+        "description": description
+      };
+    } else {
+      console.log('No documents found');
+    }
 
     //픽업 장소
     $w("#text133").text = ""
