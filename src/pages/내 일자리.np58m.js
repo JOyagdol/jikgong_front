@@ -1,5 +1,7 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
+import { fetch, getJSON } from 'wix-fetch';
+
 $w.onReady(async function () {
     // Write your JavaScript here
 
@@ -69,23 +71,18 @@ $w.onReady(async function () {
         console.log(clickedElement.id,"onclick");
     })
 
-    const jobUrl = "https://43.203.86.121/api/apply/worker/pending"
-    try {
-        const jobResponse = await fetch(jobUrl, {
-            method: "GET",
-            headers: {
-                'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjA5NzA3OTJ9.mhV9FqhLONb5uohaA8FrTEY45DFFEc5qYsDjpQD5PH8'
-            }
-          })
-          if(!jobResponse.ok) {
-            throw new Error('Network response was not ok ' + jobResponse.statusText);
-          }
-          const responseData = await jobResponse.json()
-          console.log(responseData)
-    }
-    catch (error) {
-        console.log('Error:',error)
-    }
-
+    const jobUrl = "http://43.203.86.121/api/apply/worker/pending"
+   
+    const jobResponse = await fetch(jobUrl, {
+        method: "GET",
+        headers: {
+            'Auth': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjA5NzA3OTJ9.mhV9FqhLONb5uohaA8FrTEY45DFFEc5qYsDjpQD5PH8'
+        }
+    })
+        
+    const responseData = await jobResponse.json()
+    console.log(responseData)
+    
+   
 
 });
