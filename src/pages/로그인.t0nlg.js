@@ -8,7 +8,7 @@ $w.onReady(function () {
     // To select an element by ID use: $w('#elementID')
 
     $w('#button18').onClick(async () => {
-        const loginUrl = "https://43.203.86.121/api/login/"
+        const loginUrl = "https://asdfdsas.p-e.kr/api/login/"
         const data = {
             "loginId": "abcdefg1",
             "password": "abcdefg1",

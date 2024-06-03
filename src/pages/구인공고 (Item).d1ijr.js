@@ -45,7 +45,7 @@ import { getApiKey, kakaoApiKey } from "backend/apikey.jsw";
 $w.onReady(async function () {
     // Write your JavaScript here
     const query = wixLocation.query;
-    const url = "http://43.203.86.121/api/job-post/worker/"+`${query.jobPostId}`
+    const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
     var { data, message } = await getDataWithGetMethod({
         url: url,
       });

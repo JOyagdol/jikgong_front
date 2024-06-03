@@ -37,7 +37,7 @@ function initComponents() {
 async function render(){
     $w("#listRepeater").data = []
     var { data, message } = await getDataWithGetMethod({
-    url: "http://43.203.86.121/api/job-post/worker/list",
+    url: "https://asdfdsas.p-e.kr/api/job-post/worker/list",
   });
   for(let i=0;i < data.content.length;i++) {
     data.content[i]._id = `${i+1}`

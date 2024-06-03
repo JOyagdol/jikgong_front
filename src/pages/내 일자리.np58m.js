@@ -71,7 +71,7 @@ $w.onReady(async function () {
         console.log(clickedElement.id,"onclick");
     })
 
-    const jobUrl = "http://43.203.86.121/api/apply/worker/pending"
+    const jobUrl = "https://asdfdsas.p-e.kr/api/apply/worker/pending"
    
     const jobResponse = await fetch(jobUrl, {
         method: "GET",
