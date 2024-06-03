@@ -103,7 +103,7 @@ $w.onReady(async function () {
       method: "GET",
       headers: {
         'Authorization': `KakaoAK ${ApiKey}`
-      }
+      },
     })
     const mapdata = await mapResponse.json();
     if (mapdata.documents && mapdata.documents.length > 0) {

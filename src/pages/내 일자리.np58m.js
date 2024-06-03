@@ -1,6 +1,6 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
-$w.onReady(function () {
+$w.onReady(async function () {
     // Write your JavaScript here
 
     // To select an element by ID use: $w('#elementID')
@@ -68,6 +68,24 @@ $w.onReady(function () {
 
         console.log(clickedElement.id,"onclick");
     })
+
+    const jobUrl = "https://43.203.86.121/api/apply/worker/pending"
+    try {
+        const jobResponse = await fetch(jobUrl, {
+            method: "GET",
+            headers: {
+                'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjA5NzA3OTJ9.mhV9FqhLONb5uohaA8FrTEY45DFFEc5qYsDjpQD5PH8'
+            }
+          })
+          if(!jobResponse.ok) {
+            throw new Error('Network response was not ok ' + jobResponse.statusText);
+          }
+          const responseData = await jobResponse.json()
+          console.log(responseData)
+    }
+    catch (error) {
+        console.log('Error:',error)
+    }
 
 
 });
