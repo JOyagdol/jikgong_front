@@ -8,17 +8,17 @@ $w.onReady(function () {
     // To select an element by ID use: $w('#elementID')
 
     $w('#button18').onClick(async () => {
-        const loginUrl = "https://asdfdsas.p-e.kr/api/login/"
+        const loginUrl = "https://asdfdsas.p-e.kr/api/login"
         const data = {
-            "loginId": "abcdefg1",
-            "password": "abcdefg1",
-            "deviceToken": "string"
+            loginId: "abcdefg1",
+            password: "abcdefg1",
+            deviceToken: "string"
         }
         try {
             const loginResponse = await fetch(loginUrl, {
                 method: "POST",
                 headers: {
-                    'Content-Types' : 'application/json',
+                    'Content-Type' : 'application/json',
                 },
                 body: JSON.stringify(data)
               })
