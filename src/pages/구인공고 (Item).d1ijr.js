@@ -72,8 +72,10 @@ $w.onReady(async function () {
     // 노동 기간
     var startDate = data.workDateResponseList[0].date
     var endDate = data.workDateResponseList[data.workDateResponseList.length-1].date
-    $w("#text2").text = startDate + " ~ \n" + endDate;
-    $w("#text128").text = startDate + " ~ \n" + endDate;
+    var resultDate = startDate + " ~ \n" + endDate;
+    var lightBoxDate = startDate + " ~ " + endDate;
+    $w("#text2").text = resultDate;
+    $w("#text128").text = resultDate;
 
     // 직종
     if (data.tech == "NORMAL") {
@@ -125,7 +127,10 @@ $w.onReady(async function () {
       $w("#text133").text = pickupText + "\n" + pickupAddressList[i]
     }
 
-    var lightBoxData = {'title':`${data.title}`}
+    var lightBoxData = {
+      'title':`${data.title}`,
+      'date' : `${lightBoxDate}`
+    }
     $w("#button1").onClick(() => {
       wixWindow.openLightbox("지원하기",lightBoxData)
     })

@@ -6,9 +6,10 @@ import wixWindow from 'wix-window-frontend';
 $w.onReady(function () {
 
     const received = wixWindow.lightbox.getContext()
-    console.log(received.title)
+    console.log(received.date)
 
     $w("#text125").text = received.title
+    $w("#text152").text = received.date
     
     // 지원하기 버튼 만들기
 });
