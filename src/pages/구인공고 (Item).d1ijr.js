@@ -127,9 +127,17 @@ $w.onReady(async function () {
       $w("#text133").text = pickupText + "\n" + pickupAddressList[i]
     }
 
+    var workDateList = []
+    var workDateResponseList = data.workDateResponseList
+    for(let i=0;i<workDateResponseList.length;i++) {
+      workDateList.push(workDateResponseList[i].workDateId)
+    }
+
     var lightBoxData = {
       'title':`${data.title}`,
-      'date' : `${lightBoxDate}`
+      'date' :`${lightBoxDate}`,
+      'workDateList' :workDateList,
+      'jobPostId' : `${data.jobPostId}`
     }
     $w("#button1").onClick(() => {
       wixWindow.openLightbox("지원하기",lightBoxData)

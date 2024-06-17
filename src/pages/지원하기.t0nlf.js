@@ -6,10 +6,34 @@ import wixWindow from 'wix-window-frontend';
 $w.onReady(function () {
 
     const received = wixWindow.lightbox.getContext()
-    console.log(received.date)
-
+    var workDateList = received.workDateList
+    console.log(workDateList)
     $w("#text125").text = received.title
     $w("#text152").text = received.date
-    
-    // 지원하기 버튼 만들기
+    $w("#button8").onClick(async () => {
+        const applyUrl = "https://asdfdsas.p-e.kr/api/apply/worker"
+        const data = {
+            jobPostId: Number(received.jobPostId),
+            workDateList: workDateList
+        }
+        console.log(data)
+        try {
+            const applyResponse = await fetch(applyUrl, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjA5NzA3OTJ9.mhV9FqhLONb5uohaA8FrTEY45DFFEc5qYsDjpQD5PH8'
+                },
+                body: JSON.stringify(data)
+              })
+              if(!applyResponse.ok) {
+                throw new Error('Network response was not ok ' + applyResponse.statusText);
+              }
+              const responseData = await applyResponse.json()
+              console.log(responseData)
+        }
+        catch (error) {
+            console.log('Error:',error)
+        }
+    })
 });
