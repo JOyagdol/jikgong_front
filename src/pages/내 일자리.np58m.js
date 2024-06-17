@@ -1,6 +1,10 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
 import { fetch, getJSON } from 'wix-fetch';
+import { getDataWithGetMethod } from "backend/dataFetcher";
+import wixLocation from 'wix-location-frontend';
+
+  
 
 $w.onReady(async function () {
     // Write your JavaScript here
@@ -10,8 +14,11 @@ $w.onReady(async function () {
     // Click 'Preview' to run your code
     //button 8 확정
 
-    $w('#section3').collapse();
+    $w('#section1').collapse();
+    $w('#section2').collapse();
     $w('#section4').collapse();
+    $w('#button8').collapse();
+    $w('#button10').collapse();
 
     $w('#button8').onClick( (event) => {
         const clickedElement = event.target;
@@ -82,7 +89,71 @@ $w.onReady(async function () {
         
     const responseData = await jobResponse.json()
     console.log(responseData)
-    
-   
 
+    $w('#repeater1').data = []
+    initComponents()
+    render()
 });
+
+function initComponents() {
+    initRepeater()
+  }
+
+async function render(){
+    $w('#repeater1').data = []
+    var { data, message } = await getDataWithGetMethod({
+    url: "https://asdfdsas.p-e.kr/api/job-post/worker/list",
+    });
+    for(let i=0;i < data.content.length;i++) {
+        data.content[i]._id = `${i+1}`
+        data.content[i].dlPP = `${i+1}`
+        data.content[i].occupation = `${{"civil" : true, "electricity" : true}}`
+    }
+    $w('#repeater1').data = []
+    $w('#repeater1').data = data.content;
+}  
+
+function initRepeater() {
+    $w('#repeater1').onItemReady(($item, itemData) => {
+        //initItemBackground($item, itemData)
+
+        initItemWorkingDate($item, itemData)
+        initItemTechTag($item, itemData)
+        initItemTitle($item, itemData)
+        initItemButtion($item, itemData)
+        initItemPicture($item, itemData)
+
+    });
+}
+function initItemTitle($item, itemData) {
+    $item("#text153").text = itemData.title;
+  }
+  
+  function initItemPicture($item, itemData) {
+    $item("#image1").picture.src = itemData.thumbnailS3Url;
+  }
+  
+  function initItemWorkingDate($item, itemData) {
+    $item("#text154").text = itemData.startDate + " ~ " + itemData.endDate;
+  }
+  
+  function initItemTechTag($item, itemData) {
+    //console.log(itemData.meal, itemData.pickup)
+    if (itemData.tech == "NORMAL")
+      $item("#selectionTags5").options = [
+        {'label':'보통인부','value':`${itemData.tech}`}, 
+      ]
+    else if (itemData.tech == "TILE")
+      $item("#selectionTags5").options = [
+        {'label':'타일','value':`${itemData.tech}`}, 
+      ]
+  }
+
+  function initItemButtion($item, itemData) {
+    $item("#button19").onClick(() => {
+      // 취소부분
+    })
+  }
+
+
+  
