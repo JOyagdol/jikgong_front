@@ -93,25 +93,22 @@ $w.onReady(async function () {
     $w('#repeater1').data = []
     initComponents()
     render()
+
+    function initComponents() {
+      initRepeater()
+    }
+  
+    async function render(){
+        $w('#repeater1').data = []
+        var { data, message } = await responseData
+        $w('#repeater1').data = []
+        for(let i=0; i<data.length; i++) {
+          $w('#repeater1').data = data[i].content;
+        }
+        console.log($w('#repeater1').data)  
+    }  
 });
 
-function initComponents() {
-    initRepeater()
-  }
-
-async function render(){
-    $w('#repeater1').data = []
-    var { data, message } = await getDataWithGetMethod({
-    url: "https://asdfdsas.p-e.kr/api/job-post/worker/list",
-    });
-    for(let i=0;i < data.content.length;i++) {
-        data.content[i]._id = `${i+1}`
-        data.content[i].dlPP = `${i+1}`
-        data.content[i].occupation = `${{"civil" : true, "electricity" : true}}`
-    }
-    $w('#repeater1').data = []
-    $w('#repeater1').data = data.content;
-}  
 
 function initRepeater() {
     $w('#repeater1').onItemReady(($item, itemData) => {
