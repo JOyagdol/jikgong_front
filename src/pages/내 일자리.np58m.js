@@ -15,115 +15,118 @@ $w.onReady(async function () {
     //button 8 확정
 
     $w('#section1').collapse();
-    $w('#section2').collapse();
+    $w('#button9').collapse();
     $w('#section4').collapse();
     $w('#button8').collapse();
     $w('#button10').collapse();
 
-    $w('#button8').onClick( (event) => {
-        const clickedElement = event.target;
-        clickedElement.style.color = "#FD5521";
-        clickedElement.style.borderColor = "#FD5521";
+    // $w('#button8').onClick( (event) => {
+    //     const clickedElement = event.target;
+    //     clickedElement.style.color = "#FD5521";
+    //     clickedElement.style.borderColor = "#FD5521";
 
-        $w('#button9').style.color = "#C7C7C7";
-        $w('#button9').style.borderColor = "#C7C7C7";
+    //     $w('#button9').style.color = "#C7C7C7";
+    //     $w('#button9').style.borderColor = "#C7C7C7";
 
-        $w('#button10').style.color = "#C7C7C7";
-        $w('#button10').style.borderColor = "#C7C7C7";
+    //     $w('#button10').style.color = "#C7C7C7";
+    //     $w('#button10').style.borderColor = "#C7C7C7";
 
-        $w('#section1').expand();
-        $w('#section3').collapse();
-        $w('#section4').collapse();
+    //     $w('#section1').expand();
+    //     $w('#section3').collapse();
+    //     $w('#section4').collapse();
 
-        console.log(clickedElement.id,"onclick");
-    })
+    //     console.log(clickedElement.id,"onclick");
+    // })
 
     //button 9 예약
 
-    $w('#button9').onClick( (event) => {
-        const clickedElement = event.target;
-        clickedElement.style.color = "#FD5521";
-        clickedElement.style.borderColor = "#FD5521";
+    // $w('#button9').onClick( (event) => {
+    //     const clickedElement = event.target;
+    //     clickedElement.style.color = "#FD5521";
+    //     clickedElement.style.borderColor = "#FD5521";
 
-        $w('#button8').style.color = "#C7C7C7";
-        $w('#button8').style.borderColor = "#C7C7C7";
+    //     $w('#button8').style.color = "#C7C7C7";
+    //     $w('#button8').style.borderColor = "#C7C7C7";
 
-        $w('#button10').style.color = "#C7C7C7";
-        $w('#button10').style.borderColor = "#C7C7C7";
+    //     $w('#button10').style.color = "#C7C7C7";
+    //     $w('#button10').style.borderColor = "#C7C7C7";
 
-        $w('#section1').collapse();
-        $w('#section3').expand();
-        $w('#section4').collapse();
+    //     $w('#section1').collapse();
+    //     $w('#section3').expand();
+    //     $w('#section4').collapse();
 
-        console.log(clickedElement.id,"onclick");
-    })
+    //     console.log(clickedElement.id,"onclick");
+    // })
 
     //button 10 마감
 
-    $w('#button10').onClick( (event) => {
-        const clickedElement = event.target;
-        clickedElement.style.color = "#FD5521";
-        clickedElement.style.borderColor = "#FD5521";
+    // $w('#button10').onClick( (event) => {
+    //     const clickedElement = event.target;
+    //     clickedElement.style.color = "#FD5521";
+    //     clickedElement.style.borderColor = "#FD5521";
 
-        $w('#button8').style.color = "#C7C7C7";
-        $w('#button8').style.borderColor = "#C7C7C7";
+    //     $w('#button8').style.color = "#C7C7C7";
+    //     $w('#button8').style.borderColor = "#C7C7C7";
 
-        $w('#button9').style.color = "#C7C7C7";
-        $w('#button9').style.borderColor = "#C7C7C7";
+    //     $w('#button9').style.color = "#C7C7C7";
+    //     $w('#button9').style.borderColor = "#C7C7C7";
 
-        $w('#section1').collapse();
-        $w('#section3').collapse();
-        $w('#section4').expand();
+    //     $w('#section1').collapse();
+    //     $w('#section3').collapse();
+    //     $w('#section4').expand();
 
-        console.log(clickedElement.id,"onclick");
-    })
+    //     console.log(clickedElement.id,"onclick");
+    // })
 
-    const jobUrl = "https://asdfdsas.p-e.kr/api/apply/worker/pending"
-   
-    const jobResponse = await fetch(jobUrl, {
-        method: "GET",
-        headers: {
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjA5NzA3OTJ9.mhV9FqhLONb5uohaA8FrTEY45DFFEc5qYsDjpQD5PH8'
-        }
-    })
-        
-    const responseData = await jobResponse.json()
-    console.log(responseData)
 
     $w('#repeater1').data = []
     initComponents()
     render()
 
-    function initComponents() {
-      initRepeater()
-    }
-  
-    async function render(){
-        $w('#repeater1').data = []
-        var { data, message } = await responseData
-        $w('#repeater1').data = []
-        for(let i=0; i<data.length; i++) {
-          $w('#repeater1').data = data[i].content;
-        }
-        console.log($w('#repeater1').data)  
-    }  
+    
 });
 
+function initComponents() {
+    console.log("initComponents")
+    initRepeater()
+  }
+
+async function render(){
+    const jobUrl = "https://asdfdsas.p-e.kr/api/apply/worker/pending"
+
+    const jobResponse = await fetch(jobUrl, {
+    method: "GET",
+    headers: {
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjA5NzA3OTJ9.mhV9FqhLONb5uohaA8FrTEY45DFFEc5qYsDjpQD5PH8'
+    }
+    })
+    
+    var responseData = await jobResponse.json()
+    for(let i=0;i<responseData.data.length;i++) {
+      responseData.data[i]._id = `${i+1}`
+    }
+    console.log(responseData.data)
+    $w('#repeater1').data = []
+    $w('#repeater1').data = responseData.data
+
+}  
 
 function initRepeater() {
-    $w('#repeater1').onItemReady(($item, itemData) => {
+    $w('#repeater1').onItemReady(($item, itemData, index) => {
         //initItemBackground($item, itemData)
 
         initItemWorkingDate($item, itemData)
         initItemTechTag($item, itemData)
         initItemTitle($item, itemData)
         initItemButtion($item, itemData)
-        initItemPicture($item, itemData)
+        console.log("initRepeater")
+        //initItemPicture($item, itemData)
 
     });
 }
 function initItemTitle($item, itemData) {
-    $item("#text153").text = itemData.title;
+    $item("#text153").text = itemData.jobPostResponse.title;
+    console.log(itemData.jobPostResponse.title)
   }
   
   function initItemPicture($item, itemData) {
@@ -131,16 +134,16 @@ function initItemTitle($item, itemData) {
   }
   
   function initItemWorkingDate($item, itemData) {
-    $item("#text154").text = itemData.startDate + " ~ " + itemData.endDate;
+    $item("#text154").text = itemData.workDate;
   }
   
   function initItemTechTag($item, itemData) {
     //console.log(itemData.meal, itemData.pickup)
-    if (itemData.tech == "NORMAL")
+    if (itemData.jobPostResponse.tech == "NORMAL")
       $item("#selectionTags5").options = [
         {'label':'보통인부','value':`${itemData.tech}`}, 
       ]
-    else if (itemData.tech == "TILE")
+    else if (itemData.jobPostResponse.tech == "TILE")
       $item("#selectionTags5").options = [
         {'label':'타일','value':`${itemData.tech}`}, 
       ]

@@ -44,6 +44,7 @@ async function render(){
     data.content[i].dlPP = `${i+1}`
     data.content[i].occupation = `${{"civil" : true, "electricity" : true}}`
   }
+  console.log(data);
   $w("#listRepeater").data = []
   $w("#listRepeater").data = data.content;
 }
