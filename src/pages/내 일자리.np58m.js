@@ -3,7 +3,7 @@
 import { fetch, getJSON } from 'wix-fetch';
 import { getDataWithGetMethod } from "backend/dataFetcher";
 import wixLocation from 'wix-location-frontend';
-
+import wixWindow from 'wix-window-frontend';
   
 
 $w.onReady(async function () {
@@ -87,7 +87,6 @@ $w.onReady(async function () {
 });
 
 function initComponents() {
-    console.log("initComponents")
     initRepeater()
   }
 
@@ -105,9 +104,11 @@ async function render(){
     for(let i=0;i<responseData.data.length;i++) {
       responseData.data[i]._id = `${i+1}`
     }
-    console.log(responseData.data)
     $w('#repeater1').data = []
     $w('#repeater1').data = responseData.data
+    if (responseData.data.length == 0) {
+        $w('#text155').text = "지원하신 일자리가 없습니다!"
+    }
 
 }  
 
@@ -119,14 +120,12 @@ function initRepeater() {
         initItemTechTag($item, itemData)
         initItemTitle($item, itemData)
         initItemButtion($item, itemData)
-        console.log("initRepeater")
         //initItemPicture($item, itemData)
 
     });
 }
 function initItemTitle($item, itemData) {
     $item("#text153").text = itemData.jobPostResponse.title;
-    console.log(itemData.jobPostResponse.title)
   }
   
   function initItemPicture($item, itemData) {
@@ -150,8 +149,17 @@ function initItemTitle($item, itemData) {
   }
 
   function initItemButtion($item, itemData) {
-    $item("#button19").onClick(() => {
-      // 취소부분
+    $item("#button19").onClick(async () => {
+      const deleteUrl = "https://asdfdsas.p-e.kr/api/apply/worker/"+`${itemData.applyId}`
+      const deleteResponse = await fetch(deleteUrl, {
+        method: "DELETE",
+        headers: {
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjA5NzA3OTJ9.mhV9FqhLONb5uohaA8FrTEY45DFFEc5qYsDjpQD5PH8'
+        }
+        })
+        
+        var responseData = await deleteResponse.json()
+        wixLocation.to('/courses-2-1')
     })
   }
 

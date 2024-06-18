@@ -1,6 +1,7 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
 import { fetch, getJSON } from 'wix-fetch';
+import { setToken } from "backend/login";
 
 $w.onReady(function () {
     // Write your JavaScript here
@@ -26,7 +27,8 @@ $w.onReady(function () {
                 throw new Error('Network response was not ok ' + loginResponse.statusText);
               }
               const responseData = await loginResponse.json()
-              console.log(responseData)
+              console.log(responseData.data.accessToken)
+              await setToken(responseData.data.accessToken)
         }
         catch (error) {
             console.log('Error:',error)
