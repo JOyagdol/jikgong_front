@@ -106,6 +106,7 @@ async function render(){
     }
     $w('#repeater1').data = []
     $w('#repeater1').data = responseData.data
+    console.log(responseData.data);
     if (responseData.data.length == 0) {
         $w('#text155').text = "지원하신 일자리가 없습니다!"
     }
