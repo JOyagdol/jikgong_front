@@ -64,6 +64,7 @@ $w.onReady(async function () {
       sectionTag.push( {'label':'주차무료','value':`${data.park}`})
     $w("#selectionTags4").options = sectionTag
     $w("#selectionTags1").options = sectionTag
+    $w("#text154").text = data.parkDetail
     
     // 모집 인원
     $w("#text127").text = `${0}`;
@@ -76,6 +77,13 @@ $w.onReady(async function () {
     var lightBoxDate = startDate + " ~ " + endDate;
     $w("#text2").text = resultDate;
     $w("#text128").text = resultDate;
+
+    //노동 시간
+    var resultTime = data.startTime + " ~ " + data.endTime;
+    $w("#text153").text = resultTime
+
+    //급여
+    $w("#text163").text = `${data.wage}`
 
     // 직종
     if (data.tech == "NORMAL") {
@@ -126,6 +134,10 @@ $w.onReady(async function () {
       var pickupText = $w("#text133").text
       $w("#text133").text = pickupText + "\n" + pickupAddressList[i]
     }
+
+    $w("#text156").text = data.preparation
+    $w("#text159").text = data.companyName
+    $w("#text160").text = data.phone
 
     var workDateList = []
     var workDateResponseList = data.workDateResponseList

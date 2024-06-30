@@ -58,6 +58,7 @@ function initRepeater() {
     initItemTitle($item, itemData)
     initItemDeadlinePP($item, itemData)
     initItemConvenienceTag($item, itemData)
+    initItemWage($item, itemData)
     initItemButtion($item, itemData)
   });
 }
@@ -75,14 +76,19 @@ function initItemConvenienceTag($item, itemData) {
   //console.log(itemData.meal, itemData.pickup)
   var sectionTag = []
   if(itemData.pickup == true)
-    sectionTag.push( {'label':'픽업버스','value':`${itemData.pickup}`})
+    sectionTag.push( {'label':'픽업지원','value':`${itemData.pickup}`})
   if(itemData.meal == true)
     sectionTag.push( {'label':'식사','value':`${itemData.meal}`})
   $item("#selectionTags4").options = sectionTag
 }
 
 function initItemDeadlinePP($item, itemData) {
-  $item("#text7").text = `${0}`;
+  $item("#text7").text = itemData.dlPP;
+}
+
+function initItemWage($item, itemData) {
+  $item("#text153").text = "급여";
+  $item("#text8").text = `${itemData.wage}`;
 }
 
 function initItemWorkingDate($item, itemData) {
