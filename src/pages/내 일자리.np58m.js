@@ -108,7 +108,8 @@ async function render(){
     $w('#repeater1').data = responseData.data
     console.log(responseData.data);
     if (responseData.data.length == 0) {
-        $w('#text155').text = "지원하신 일자리가 없습니다!"
+        $w('#text10').text = "지원하신 일자리가 없습니다!"
+        $w('#text9').text = "구인공고로 가서 일자리를 지원해보세요!"
     }
 
 }  
