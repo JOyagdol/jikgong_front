@@ -1,5 +1,6 @@
 import { getDataWithGetMethod } from "backend/dataFetcher";
 import wixLocation from 'wix-location-frontend';
+import wixStorage from'wix-storage'; 
     //  content body
       // {
       //   "jobPostId": 1,
@@ -28,6 +29,11 @@ $w.onReady(async function () {
   initComponents()
   render()
   // 데이터 할당 시작
+  $w('#button18').onClick( (event) => {
+    $w('#listRepeater').data = []
+    initComponents()
+    render();
+  })
 });
 
 function initComponents() {
@@ -35,15 +41,13 @@ function initComponents() {
 }
 
 async function render(){
-    var tech_search = $w("#checkboxGroup1").value;
+    var tech_search = $w("#dropdown4").value;
     var date_search = $w("#input1").value;
     var meal_search = $w("#dropdown2").value;
     var park_search = $w("#dropdown3").value;
     var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?`
-    if(tech_search != null) {
-      for(let i=0; i<tech_search.length; i++) {
-        url += `tech=${tech_search[i]}&`
-      }
+    if(tech_search != null && tech_search != "") {
+      url += `tech=${tech_search}&`
     }
     
     if(date_search != null && date_search != "") {
