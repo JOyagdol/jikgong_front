@@ -35,9 +35,39 @@ function initComponents() {
 }
 
 async function render(){
+    var tech_search = $w("#checkboxGroup1").value;
+    var date_search = $w("#input1").value;
+    var meal_search = $w("#dropdown2").value;
+    var park_search = $w("#dropdown3").value;
+    var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?`
+    if(tech_search != null) {
+      for(let i=0; i<tech_search.length; i++) {
+        url += `tech=${tech_search[i]}&`
+      }
+    }
+    
+    if(date_search != null && date_search != "") {
+      url += `workDateList=${date_search}&`
+    }
+    if(meal_search != null && meal_search != "") {
+      url += `meal=${meal_search}&`
+    }
+    if(park_search != null && park_search != "") {
+      url += `park=${park_search}`
+    }
+    else {
+      url = url.slice(0, url.length-1)
+    }
+
+    if(url[url.length-1] == "&") {
+      url = url.slice(0, url.length-1)
+    }
+
+    console.log(url)
+
     $w("#listRepeater").data = []
     var { data, message } = await getDataWithGetMethod({
-    url: "https://asdfdsas.p-e.kr/api/job-post/worker/list",
+    url: url,
   });
   for(let i=0;i < data.content.length;i++) {
     data.content[i]._id = `${i+1}`
