@@ -5,7 +5,7 @@ import {sendEmail} from 'backend/email'
 
 $w.onReady(function () {
     // Write your JavaScript here
-    $w("#button8").onClick(() => {
+    $w("#button21").onClick(() => {
         const subject = $w("#input1").value;
         const body = `Name : ${$w("#input4").value}
             \rEmail : ${$w("#input2").value}

@@ -14,9 +14,7 @@ $w.onReady(async function () {
     // Click 'Preview' to run your code
     //button 8 확정
 
-    $w('#section1').collapse();
-
-    $w('#repeater1').data = []
+    $w('#listRepeater').data = []
     initComponents()
     render()
 
@@ -51,12 +49,12 @@ async function render(){
       }
       else {
         $w('#Section1Regular').collapse();
-
+        console.log(responseData)
         for(let i=0;i<responseData.data.length;i++) {
           responseData.data[i]._id = `${i+1}`
         }
-        $w('#repeater1').data = []
-        $w('#repeater1').data = responseData.data
+        $w('#listRepeater').data = []
+        $w('#listRepeater').data = responseData.data
       }
       
     }
@@ -66,7 +64,7 @@ async function render(){
 }  
 
 function initRepeater() {
-    $w('#repeater1').onItemReady(($item, itemData, index) => {
+    $w('#listRepeater').onItemReady(($item, itemData, index) => {
 
         initItemWorkingDate($item, itemData)
         initItemTechTag($item, itemData)
@@ -77,7 +75,7 @@ function initRepeater() {
     });
 }
 function initItemTitle($item, itemData) {
-    $item("#text153").text = itemData.jobPostResponse.title;
+    $item("#title").text = itemData.jobPostResponse.title;
   }
   
   function initItemPicture($item, itemData) {
@@ -85,32 +83,29 @@ function initItemTitle($item, itemData) {
   }
   
   function initItemWorkingDate($item, itemData) {
-    $item("#text154").text = itemData.workDate;
+    $item("#text158").text = itemData.workDate;
   }
   
   function initItemTechTag($item, itemData) {
     //console.log(itemData.meal, itemData.pickup)
     if (itemData.jobPostResponse.tech == "NORMAL")
-      $item("#selectionTags5").options = [
-        {'label':'보통인부','value':`${itemData.tech}`}, 
-      ]
+      $item("#text157").text = "보통인부"
     else if (itemData.jobPostResponse.tech == "TILE")
-      $item("#selectionTags5").options = [
-        {'label':'타일','value':`${itemData.tech}`}, 
-      ]
+      $item("#text157").text = "타일"
   }
 
   function initItemButtion($item, itemData) {
-    $item("#button19").onClick(async () => {
+    $item("#button9").onClick(async () => {
       const deleteUrl = "https://asdfdsas.p-e.kr/api/apply/worker/"+`${itemData.applyId}`
       const deleteResponse = await fetch(deleteUrl, {
         method: "DELETE",
         headers: {
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjA5NzA3OTJ9.mhV9FqhLONb5uohaA8FrTEY45DFFEc5qYsDjpQD5PH8'
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjcxNjg5MTN9.VMNWXYBJtFrnszwPgH7yzAW5TQX1fJwN-ZGDq8rlS-M'
         }
         })
         
         var responseData = await deleteResponse.json()
+        console.log(responseData);
         wixLocation.to('/courses-2-1')
     })
   }
