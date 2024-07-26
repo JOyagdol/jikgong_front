@@ -88,12 +88,14 @@ function initRepeater() {
     //initItemBackground($item, itemData)
 
     initItemWorkingDate($item, itemData)
-    initItemTechTag($item, itemData)
+    initItemTech($item, itemData)
     initItemTitle($item, itemData)
-    initItemDeadlinePP($item, itemData)
+    initItemAddress($item, itemData)
     initItemConvenienceTag($item, itemData)
     initItemWage($item, itemData)
     initItemButtion($item, itemData)
+    initItemCompany($item, itemData)
+    initItemTime($item, itemData)
   });
 }
 
@@ -116,8 +118,15 @@ function initItemConvenienceTag($item, itemData) {
   $item("#selectionTags4").options = sectionTag
 }
 
-function initItemDeadlinePP($item, itemData) {
-  $item("#text7").text = itemData.dlPP;
+function initItemAddress($item, itemData) {
+  $item("#text7").text = itemData.address;
+}
+
+function initItemTime($item, itemData) {
+  var startTime = itemData.startTime;
+  var endTime = itemData.endTime;
+  var time = startTime.slice(0,5) + " ~ "+ endTime.slice(0,5);
+  $item("#text157").text = time;
 }
 
 function initItemWage($item, itemData) {
@@ -128,7 +137,7 @@ function initItemWorkingDate($item, itemData) {
   $item("#text2").text = itemData.startDate + " ~ " + itemData.endDate;
 }
 
-function initItemTechTag($item, itemData) {
+function initItemTech($item, itemData) {
   //console.log(itemData.meal, itemData.pickup)
   if (itemData.tech == "NORMAL")
     $item("#text154").text = "보통인부"
@@ -140,6 +149,10 @@ function initItemButtion($item, itemData) {
   $item("#container1").onClick(() => {
     wixLocation.to(`/courses-2?jobPostId=${itemData.jobPostId}`);
   })
+}
+
+function initItemCompany($item, itemData) {
+  $item("#text156").text = itemData.companyName;
 }
 
 
