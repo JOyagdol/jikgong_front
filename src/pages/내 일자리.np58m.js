@@ -15,69 +15,6 @@ $w.onReady(async function () {
     //button 8 확정
 
     $w('#section1').collapse();
-    $w('#button9').collapse();
-    $w('#section4').collapse();
-    $w('#button8').collapse();
-    $w('#button10').collapse();
-
-    // $w('#button8').onClick( (event) => {
-    //     const clickedElement = event.target;
-    //     clickedElement.style.color = "#FD5521";
-    //     clickedElement.style.borderColor = "#FD5521";
-
-    //     $w('#button9').style.color = "#C7C7C7";
-    //     $w('#button9').style.borderColor = "#C7C7C7";
-
-    //     $w('#button10').style.color = "#C7C7C7";
-    //     $w('#button10').style.borderColor = "#C7C7C7";
-
-    //     $w('#section1').expand();
-    //     $w('#section3').collapse();
-    //     $w('#section4').collapse();
-
-    //     console.log(clickedElement.id,"onclick");
-    // })
-
-    //button 9 예약
-
-    // $w('#button9').onClick( (event) => {
-    //     const clickedElement = event.target;
-    //     clickedElement.style.color = "#FD5521";
-    //     clickedElement.style.borderColor = "#FD5521";
-
-    //     $w('#button8').style.color = "#C7C7C7";
-    //     $w('#button8').style.borderColor = "#C7C7C7";
-
-    //     $w('#button10').style.color = "#C7C7C7";
-    //     $w('#button10').style.borderColor = "#C7C7C7";
-
-    //     $w('#section1').collapse();
-    //     $w('#section3').expand();
-    //     $w('#section4').collapse();
-
-    //     console.log(clickedElement.id,"onclick");
-    // })
-
-    //button 10 마감
-
-    // $w('#button10').onClick( (event) => {
-    //     const clickedElement = event.target;
-    //     clickedElement.style.color = "#FD5521";
-    //     clickedElement.style.borderColor = "#FD5521";
-
-    //     $w('#button8').style.color = "#C7C7C7";
-    //     $w('#button8').style.borderColor = "#C7C7C7";
-
-    //     $w('#button9').style.color = "#C7C7C7";
-    //     $w('#button9').style.borderColor = "#C7C7C7";
-
-    //     $w('#section1').collapse();
-    //     $w('#section3').collapse();
-    //     $w('#section4').expand();
-
-    //     console.log(clickedElement.id,"onclick");
-    // })
-
 
     $w('#repeater1').data = []
     initComponents()
@@ -96,27 +33,40 @@ async function render(){
     const jobResponse = await fetch(jobUrl, {
     method: "GET",
     headers: {
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjA5NzA3OTJ9.mhV9FqhLONb5uohaA8FrTEY45DFFEc5qYsDjpQD5PH8'
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjcxNjg5MTN9.VMNWXYBJtFrnszwPgH7yzAW5TQX1fJwN-ZGDq8rlS-M'
     }
     })
     
     var responseData = await jobResponse.json()
-    for(let i=0;i<responseData.data.length;i++) {
-      responseData.data[i]._id = `${i+1}`
+    if (responseData.message == "만료된 access token 입니다.") {
+        $w('#section1regulartitle1').text = "로그인이 만료되었습니다!"
+        $w('#text155').text = "다시 로그인 시도 부탁드려요"
+        $w('#section1').collapse();
     }
-    $w('#repeater1').data = []
-    $w('#repeater1').data = responseData.data
-    console.log(responseData.data);
-    if (responseData.data.length == 0) {
-        $w('#text10').text = "지원하신 일자리가 없습니다!"
-        $w('#text9').text = "구인공고로 가서 일자리를 지원해보세요!"
+    else {
+      if(responseData.data.length == 0) {
+        $w('#section1regulartitle1').text = "지원하신 일자리가 없습니다!"
+        $w('#text155').text = "구인공고로 가서 일자리를 지원해보세요"
+        $w('#section1').collapse();
+      }
+      else {
+        $w('#Section1Regular').collapse();
+
+        for(let i=0;i<responseData.data.length;i++) {
+          responseData.data[i]._id = `${i+1}`
+        }
+        $w('#repeater1').data = []
+        $w('#repeater1').data = responseData.data
+      }
+      
     }
+    
+    
 
 }  
 
 function initRepeater() {
     $w('#repeater1').onItemReady(($item, itemData, index) => {
-        //initItemBackground($item, itemData)
 
         initItemWorkingDate($item, itemData)
         initItemTechTag($item, itemData)
