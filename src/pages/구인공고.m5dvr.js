@@ -121,8 +121,7 @@ function initItemDeadlinePP($item, itemData) {
 }
 
 function initItemWage($item, itemData) {
-  $item("#text153").text = "급여";
-  $item("#text8").text = `${itemData.wage}`;
+  $item("#text8").text = `${itemData.wage}`+"원";
 }
 
 function initItemWorkingDate($item, itemData) {
@@ -132,17 +131,13 @@ function initItemWorkingDate($item, itemData) {
 function initItemTechTag($item, itemData) {
   //console.log(itemData.meal, itemData.pickup)
   if (itemData.tech == "NORMAL")
-    $item("#selectionTags5").options = [
-      {'label':'보통인부','value':`${itemData.tech}`}, 
-    ]
+    $item("#text154").text = "보통인부"
   else if (itemData.tech == "TILE")
-    $item("#selectionTags5").options = [
-      {'label':'타일','value':`${itemData.tech}`}, 
-    ]
+    $item("#text154").text = "모집"
 }
 
 function initItemButtion($item, itemData) {
-  $item("#MoreButton").onClick(() => {
+  $item("#container1").onClick(() => {
     wixLocation.to(`/courses-2?jobPostId=${itemData.jobPostId}`);
   })
 }
