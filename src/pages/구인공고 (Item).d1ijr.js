@@ -1,41 +1,6 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
-//  content body
-// {
-//   "data": {
-//     "jobPostId": 2,
-//     "title": "부산 강서구 명지동 빌리브 명시 듀클래스",
-//     "tech": "NORMAL",
-//     "startTime": "09:30:00",
-//     "endTime": "18:00:00",
-//     "workAddress": "부산 강서구 명지동 3605-6",
-//     "distance": null,
-//     "meal": false,
-//     "pickup": true,
-//     "pickupAddressList": [
-//       "부산광역시 사하구 낙동대로 550번길 37",
-//       "대한민국 부산광역시 서구 구덕로 225"
-//     ],
-//     "park": "FREE",
-//     "parkDetail": "2번 GateWay 옆 공간",
-//     "preparation": "작업복, 작업화",
-//     "workDateResponseList": [
-//       {
-//         "workDateId": 3,
-//         "date": "2024-08-01"
-//       },
-//       {
-//         "workDateId": 4,
-//         "date": "2024-08-02"
-//       }
-//     ],
-//     "companyName": "삼성",
-//     "manager": "이재용",
-//     "phone": "01012345678",
-//     "imageUrls": []
-//   },
-//   "message": "모집 공고 상세 화면 - 일반 반환 완료"
-// }
+
 
 import wixLocation from 'wix-location-frontend';
 import wixWindow from 'wix-window-frontend';
@@ -50,62 +15,84 @@ $w.onReady(async function () {
         url: url,
       });
     
+    console.log(data);
     // title
-    $w("#title").text = data.title
-    $w("#text134").text = data.title
+    $w("#text126").text = data.title;
+    $w("#text136").text = data.title;
 
     // 근무 환경
     var sectionTag = []
-    if(data.pickup == true)
-      sectionTag.push( {'label':'픽업버스','value':`${data.pickup}`})
-    if(data.meal == true)
-      sectionTag.push( {'label':'식사','value':`${data.meal}`})
-    if(data.park == "FREE")
-      sectionTag.push( {'label':'주차무료','value':`${data.park}`})
-    $w("#selectionTags4").options = sectionTag
-    $w("#selectionTags1").options = sectionTag
-    $w("#text154").text = data.parkDetail
+    if(data.pickup == true) {
+      sectionTag.push( {'label':'픽업장소 지원','value':`${data.pickup}`});
+      var pickupAddress = data.pickupAddressList.join('\n\n');
+      $w("#text157").text = pickupAddress;
+    }
+    if(data.meal == true) {
+      sectionTag.push( {'label':'식사','value':`${data.meal}`});
+      $w("#text156").text = "식사 제공";
+    }
+    //park free가 아닌 경우
+    if(data.park == "FREE") {
+      sectionTag.push( {'label':'주차무료','value':`${data.park}`});
+      $w("#text155").text = data.parkDetail;
+    }
+      
+    $w("#selectionTags4").options = sectionTag;
     
+    $w("#text172").text = data.preparation;
+    
+    // 이거 예외처리 생각
+    var recruitNum = data.workDateResponseList[0].recruitNum;
     // 모집 인원
-    $w("#text127").text = `${0}`;
-    $w("#text1").text = `${0}`;
+    $w("#text124").text = `인원 ${recruitNum} 명`;
+    $w("#text142").text = `${recruitNum} 명`;
 
-    // 노동 기간
-    var startDate = data.workDateResponseList[0].date
+    // 근무 기간
+    var startDate = data.workDateResponseList[0].date;
     var endDate = data.workDateResponseList[data.workDateResponseList.length-1].date
-    var resultDate = startDate + " ~ \n" + endDate;
-    var lightBoxDate = startDate + " ~ " + endDate;
-    $w("#text2").text = resultDate;
-    $w("#text128").text = resultDate;
+    var resultDate = ""
+    for(let i=1;i<data.workDateResponseList.length;i++) {
+      var date1 = new Date(startDate);
+      var date2 = new Date(data.workDateResponseList[i].date);
+      var date3 = new Date(endDate);
+      if (date1 > date2) {
+        startDate = data.workDateResponseList[i].date;
+      }
+      if (date2 > date3) {
+        endDate = data.workDateResponseList[i].date;
+      }
+    }
+    if (startDate == endDate) {
+      resultDate = startDate;
+    }
+    else {
+      resultDate = startDate + " ~ " + endDate;
+    }
+    $w("#text130").text = resultDate;
+    $w("#text176").text = resultDate;
 
     //노동 시간
-    var resultTime = data.startTime + " ~ " + data.endTime;
-    $w("#text153").text = resultTime
+    var resultTime = data.startTime.slice(0,5) + " ~ "+ data.endTime.slice(0,5);
+    $w("#text131").text = resultTime
+    $w("#text177").text = resultTime
 
-    //급여
-    $w("#text163").text = `${data.wage}`
+    // //급여
+    // $w("#text163").text = `${data.wage}`
 
     // 직종
     if (data.tech == "NORMAL") {
-      $w("#selectionTags3").options = [
-        {'label':'보통인부','value':`${data.tech}`}, 
-      ]
-      $w("#selectionTags2").options = [
-        {'label':'보통인부','value':`${data.tech}`}, 
-      ]
+      $w("#title").text = "보통인부";
+      $w("#text141").text = "보통인부";
     }
       
     else if (data.tech == "TILE") {
-      $w("#selectionTags2").options = [
-        {'label':'타일','value':`${data.tech}`}, 
-      ]
-      $w("#selectionTags3").options = [
-        {'label':'타일','value':`${data.tech}`}, 
-      ]
+      $w("#title").text = "타일";
+      $w("#text141").text = "타일";
     }
       
     //작업 장소
-    $w("#text129").text = data.workAddress
+    $w("#text132").text = data.workAddress
+    $w("#text174").text = data.workAddress
     // 지도
     const mapUrl = `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(data.workAddress)}`
     const ApiKey = await getApiKey() //"483e4425efc50d6891881bece6845a9e"
@@ -127,17 +114,11 @@ $w.onReady(async function () {
       console.log('No documents found');
     }
 
-    //픽업 장소
-    $w("#text133").text = ""
-    var pickupAddressList = data.pickupAddressList
-    for(let i=0;i<pickupAddressList.length;i++) {
-      var pickupText = $w("#text133").text
-      $w("#text133").text = pickupText + "\n" + pickupAddressList[i]
-    }
-
-    $w("#text156").text = data.preparation
-    $w("#text159").text = data.companyName
-    $w("#text160").text = data.phone
+    // 담당자 정보
+    $w("#text133").text = data.companyName
+    $w("#text168").text = data.companyName
+    $w("#text166").text = data.phone
+    $w("#text167").text = data.manager
 
     var workDateList = []
     var workDateResponseList = data.workDateResponseList
@@ -145,13 +126,14 @@ $w.onReady(async function () {
       workDateList.push(workDateResponseList[i].workDateId)
     }
 
-    var lightBoxData = {
+    var applyData = {
       'title':`${data.title}`,
-      'date' :`${lightBoxDate}`,
       'workDateList' :workDateList,
+      'tech' :`${data.tech}`,
       'jobPostId' : `${data.jobPostId}`
     }
-    $w("#button1").onClick(() => {
-      wixWindow.openLightbox("지원하기",lightBoxData)
+    $w("#button21").onClick(() => {
+      //wixLocation.to(`/courses-2?${applyData}`)
+      wixWindow.openLightbox("지원하기",applyData)
     })
 });
