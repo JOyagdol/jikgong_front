@@ -35,6 +35,7 @@ async function render(){
     }
     })
     
+    // repeater 개수 늘어나는 경우 페이지 처리?
     var responseData = await jobResponse.json()
     if (responseData.message == "만료된 access token 입니다.") {
         $w('#section1regulartitle1').text = "로그인이 만료되었습니다!"
