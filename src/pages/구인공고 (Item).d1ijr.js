@@ -77,8 +77,11 @@ $w.onReady(async function () {
     $w("#text131").text = resultTime
     $w("#text177").text = resultTime
 
-    // //급여
-    // $w("#text163").text = `${data.wage}`
+    //급여
+    var amount = Number(data.wage);
+    var formmatedAmout = amount.toLocaleString('ko-KR');
+    $w("#text135").text = `${formmatedAmout} 원`
+    $w("#text143").text = `${formmatedAmout} 원`
 
     // 직종
     if (data.tech == "NORMAL") {

@@ -14,7 +14,6 @@ $w.onReady(async function () {
     // Click 'Preview' to run your code
     //button 8 확정
 
-    $w('#listRepeater').data = []
     initComponents()
     render()
 
@@ -107,7 +106,7 @@ function initItemTitle($item, itemData) {
         
         var responseData = await deleteResponse.json()
         console.log(responseData);
-        wixLocation.to('/courses-2-1')
+        render();
     })
   }
 
