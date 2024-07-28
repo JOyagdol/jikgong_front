@@ -6,6 +6,7 @@ import wixLocation from 'wix-location-frontend';
 import wixWindow from 'wix-window-frontend';
 import { getDataWithGetMethod } from "backend/dataFetcher";
 import { getApiKey, kakaoApiKey } from "backend/apikey.jsw";
+import { session } from 'wix-storage-frontend';
 
 $w.onReady(async function () {
     // Write your JavaScript here
@@ -120,20 +121,7 @@ $w.onReady(async function () {
     $w("#text166").text = data.phone
     $w("#text167").text = data.manager
 
-    var workDateList = []
-    var workDateResponseList = data.workDateResponseList
-    for(let i=0;i<workDateResponseList.length;i++) {
-      workDateList.push(workDateResponseList[i].workDateId)
-    }
-
-    var applyData = {
-      'title':`${data.title}`,
-      'workDateList' :workDateList,
-      'tech' :`${data.tech}`,
-      'jobPostId' : `${data.jobPostId}`
-    }
     $w("#button21").onClick(() => {
-      //wixLocation.to(`/courses-2?${applyData}`)
-      wixWindow.openLightbox("지원하기",applyData)
+      wixLocation.to(`/지원하기?jobPostId=${data.jobPostId}`);
     })
 });
