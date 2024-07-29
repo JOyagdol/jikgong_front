@@ -6,11 +6,10 @@ import {sendEmail} from 'backend/email'
 $w.onReady(function () {
     // Write your JavaScript here
     $w("#button21").onClick(() => {
-        const subject = "직공 문의하기"
+        const name = $w("#input1").value
         const email = $w("#input2").value
-        const body = `Name : ${$w("#input1").value}
-            \rMessage : ${$w("#textBox1").value}`;
-        sendEmail(subject, body, email)
+        const message = $w("#textBox1").value
+        sendEmail(name, email, message)
             .then(response => console.log(response))
     })
     

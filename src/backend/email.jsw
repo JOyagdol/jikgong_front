@@ -1,9 +1,52 @@
 import {sendWithService} from 'backend/sendGrid';
 
-export function sendEmail(subject, body, email) {
-    const key = ""
-    const sender = email
-    const recipient = "pool021224@gmail.com"
-    return sendWithService(key, sender, recipient, subject, body)
+import { fetch } from 'wix-fetch';
+
+export async function sendEmail(name, email, message) {
+    // 200 emails/day
+    const service_id = 'service_ft19xsu';
+    const template_id = 'template_nxwqp9j';
+    const user_id = 'Bl2StFYzpmc7YPEnM';
+
+
+    var data = {
+        service_id: service_id,
+        template_id: template_id,
+        user_id: user_id,
+        template_params: {
+            'name': name,
+            'email': email,
+            'message': message
+        }
+    };
+
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const url = 'https://api.emailjs.com/api/v1.0/email/send';
+
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                resolve(JSON.parse(xhr.responseText));
+            } else {
+                reject({
+                    status: xhr.status,
+                    statusText: xhr.statusText
+                });
+            }
+        };
+
+        xhr.onerror = function () {
+            reject({
+                status: xhr.status,
+                statusText: xhr.statusText
+            });
+        };
+
+        xhr.send(JSON.stringify(data));
+    });
+  
     // https://limejuicer.tistory.com/1732 참조
 }

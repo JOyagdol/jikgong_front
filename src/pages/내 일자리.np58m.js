@@ -70,6 +70,7 @@ function initRepeater() {
         initItemTechTag($item, itemData)
         initItemTitle($item, itemData)
         initItemButtion($item, itemData)
+        initItemStatus($item, itemData)
         //initItemPicture($item, itemData)
 
     });
@@ -111,4 +112,10 @@ function initItemTitle($item, itemData) {
   }
 
 
-  
+function initItemStatus($item, itemData) {
+  if(itemData.status == "PENDING") $item("#text159").text = "대기중"
+  else if(itemData.status == "REJECTED") $item("#text159").text = "거절됨"
+  else if(itemData.status == "ACCEPTED") $item("#text159").text = "수락됨"
+  else if(itemData.status == "CANCELED") $item("#text159").text = "취소됨"
+  else if(itemData.status == "OFFERED") $item("#text159").text = "제안됨"
+}
