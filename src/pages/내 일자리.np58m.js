@@ -71,6 +71,7 @@ function initRepeater() {
         initItemTitle($item, itemData)
         initItemButtion($item, itemData)
         initItemStatus($item, itemData)
+        initItemTimeStamp($item, itemData)
         //initItemPicture($item, itemData)
 
     });
@@ -118,4 +119,8 @@ function initItemStatus($item, itemData) {
   else if(itemData.status == "ACCEPTED") $item("#text159").text = "수락됨"
   else if(itemData.status == "CANCELED") $item("#text159").text = "취소됨"
   else if(itemData.status == "OFFERED") $item("#text159").text = "제안됨"
+}
+
+function initItemTimeStamp($item, itemData) {
+  $item("#text126").text = itemData.timePassed;
 }

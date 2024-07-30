@@ -45,7 +45,7 @@ async function render(){
     var date_search = $w("#input1").value;
     var meal_search = $w("#dropdown2").value;
     var park_search = $w("#dropdown3").value;
-    var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?`
+    var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?size=20&`
     if(tech_search != null && tech_search != "") {
       url += `tech=${tech_search}&`
     }
@@ -66,9 +66,6 @@ async function render(){
     if(url[url.length-1] == "&") {
       url = url.slice(0, url.length-1)
     }
-
-    console.log(url)
-
     $w("#listRepeater").data = []
     var { data, message } = await getDataWithGetMethod({
     url: url,
