@@ -10,6 +10,15 @@ import { session } from 'wix-storage-frontend';
 
 $w.onReady(async function () {
     // Write your JavaScript here
+    var loginKey = session.getItem("loginKey");
+    if(loginKey) {
+      $w("#button4").label = "로그아웃"
+      $w("#button4").onClick(() => {
+        session.removeItem("loginKey");
+        $w("#button4").label = "로그인"
+        wixLocation.to(`/`);
+      })
+    }
     const query = wixLocation.query;
     const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
     var { data, message } = await getDataWithGetMethod({
@@ -124,7 +133,15 @@ $w.onReady(async function () {
     $w("#text166").text = data.phone
     $w("#text167").text = data.manager
 
-    $w("#button21").onClick(() => {
-      wixLocation.to(`/지원하기?jobPostId=${data.jobPostId}`);
-    })
+    if(loginKey) {
+      $w("#button21").onClick(() => {
+        wixLocation.to(`/지원하기?jobPostId=${data.jobPostId}`);
+      })
+    }
+    else {
+      $w("#button21").onClick(() => {
+        wixLocation.to(`/로그인`);
+      })
+    }
+    
 });

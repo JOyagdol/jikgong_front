@@ -1,6 +1,6 @@
 import { getDataWithGetMethod } from "backend/dataFetcher";
 import wixLocation from 'wix-location-frontend';
-import wixStorage from'wix-storage'; 
+import { session } from "wix-storage-frontend";
     //  content body
       // {
       //   "jobPostId": 1,
@@ -25,6 +25,16 @@ import wixStorage from'wix-storage';
 
 $w.onReady(async function () {
   // 기존 데이터 초기화 + 데이터 받아오기
+  var loginKey = session.getItem("loginKey");
+  if(loginKey) {
+    $w("#button4").label = "로그아웃"
+    $w("#button4").onClick(() => {
+      session.removeItem("loginKey");
+      $w("#button4").label = "로그인"
+      wixLocation.to(`/`);
+    })
+  }
+
   $w('#listRepeater').data = []
   initComponents()
   render()

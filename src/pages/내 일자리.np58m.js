@@ -4,8 +4,9 @@ import { fetch, getJSON } from 'wix-fetch';
 import { getDataWithGetMethod } from "backend/dataFetcher";
 import wixLocation from 'wix-location-frontend';
 import wixWindow from 'wix-window-frontend';
-  
+import { session } from 'wix-storage-frontend';
 
+var loginKey = session.getItem("loginKey");
 $w.onReady(async function () {
     // Write your JavaScript here
 
@@ -13,11 +14,23 @@ $w.onReady(async function () {
 
     // Click 'Preview' to run your code
     //button 8 확정
-
-    initComponents()
-    render()
-
     
+    if(loginKey) {
+      $w("#button4").label = "로그아웃"
+      $w("#button4").onClick(() => {
+          session.removeItem("loginKey");
+          $w("#button4").label = "로그인"
+          wixLocation.to(`/`);
+      })
+      initComponents()
+      render()
+    }
+    else {
+      $w('#section1regulartitle1').text = "로그인 후 이용 가능합니다"
+      $w('#text155').text = "회원가입 후 로그인 부탁드립니다"
+      $w('#section1').collapse();
+      wixLocation.to(`/로그인`);
+    }
 });
 
 function initComponents() {
@@ -30,16 +43,21 @@ async function render(){
     const jobResponse = await fetch(jobUrl, {
     method: "GET",
     headers: {
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjcxNjg5MTN9.VMNWXYBJtFrnszwPgH7yzAW5TQX1fJwN-ZGDq8rlS-M'
+        'Authorization': `Bearer ${loginKey}`
     }
     })
     
     // repeater 개수 늘어나는 경우 페이지 처리?
     var responseData = await jobResponse.json()
-    if (responseData.message == "만료된 access token 입니다.") {
+    if (responseData.data.errorMessage == "만료된 access token 입니다.") {
         $w('#section1regulartitle1').text = "로그인이 만료되었습니다!"
         $w('#text155').text = "다시 로그인 시도 부탁드려요"
         $w('#section1').collapse();
+    }
+    else if (responseData.data.errorMessage) {
+      $w('#section1regulartitle1').text = responseData.data.errorMessage
+      $w('#text155').collapse();
+      $w('#section1').collapse();
     }
     else {
       if(responseData.data.length == 0) {
@@ -102,7 +120,7 @@ function initItemTitle($item, itemData) {
       const deleteResponse = await fetch(deleteUrl, {
         method: "DELETE",
         headers: {
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjcxNjg5MTN9.VMNWXYBJtFrnszwPgH7yzAW5TQX1fJwN-ZGDq8rlS-M'
+            'Authorization': `Bearer ${loginKey}`
         }
         })
         

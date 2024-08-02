@@ -3,64 +3,82 @@
 
 import wixLocation from 'wix-location-frontend';
 import { getDataWithGetMethod } from "backend/dataFetcher";
+import { session } from 'wix-storage-frontend';
 
 var workDateActive = {};
 const query = wixLocation.query;
 $w.onReady(async function () {
-    const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
-    var { data, message } = await getDataWithGetMethod({
-        url: url,
-      });
-    // title
-    $w("#text126").text = data.title;
-
-    // tech
-    if (data.tech == "NORMAL") {
-        $w("#title").text = "보통인부";
-    }
-        
-    else if (data.tech == "TILE") {
-        $w("#title").text = "타일";
-    }
-
-    var recruitNum = data.workDateResponseList[0].recruitNum;
-    // 모집 인원
-    $w("#text124").text = `${recruitNum} 명 모집`;
-    initComponents()
-    render(data)
-
-    $w("#button21").onClick(async () => {
-        var applyUrl = "https://asdfdsas.p-e.kr/api/apply/worker"
-        var workDateList = [];
-        for (const key in workDateActive) {
-            if(workDateActive[key] == "Active") {
-                workDateList.push(key);
+    var loginKey = session.getItem("loginKey");
+    if(loginKey) {
+        $w("#button4").label = "로그아웃"
+        $w("#button4").onClick(() => {
+            session.removeItem("loginKey");
+            $w("#button4").label = "로그인"
+            wixLocation.to(`/`);
+        })
+        const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
+        var { data, message } = await getDataWithGetMethod({
+            url: url,
+          });
+        // title
+        $w("#text126").text = data.title;
+    
+        // tech
+        if (data.tech == "NORMAL") {
+            $w("#title").text = "보통인부";
+        }
+            
+        else if (data.tech == "TILE") {
+            $w("#title").text = "타일";
+        }
+    
+        var recruitNum = data.workDateResponseList[0].recruitNum;
+        // 모집 인원
+        $w("#text124").text = `${recruitNum} 명 모집`;
+        initComponents()
+        render(data)
+    
+        $w("#button21").onClick(async () => {
+            var applyUrl = "https://asdfdsas.p-e.kr/api/apply/worker"
+            var workDateList = [];
+            for (const key in workDateActive) {
+                if(workDateActive[key] == "Active") {
+                    workDateList.push(key);
+                }
             }
-        }
-        var data = {
-            jobPostId: Number(query.jobPostId),
-            workDateList: workDateList
-        }
-        try {
-            const applyResponse = await fetch(applyUrl, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiYWJjZGVmZzEiLCJleHAiOjE3MjcxNjg5MTN9.VMNWXYBJtFrnszwPgH7yzAW5TQX1fJwN-ZGDq8rlS-M'
-                },
-                body: JSON.stringify(data)
-              })
-              if(!applyResponse.ok) {
-                throw new Error('Network response was not ok ' + applyResponse.statusText);
-              }
-              const responseData = await applyResponse.json()
-              console.log(responseData)
-        }
-        catch (error) {
-            console.log('Error:',error)
-        }
-        wixLocation.to(`/news-1`);
-    })
+            var data = {
+                jobPostId: Number(query.jobPostId),
+                workDateList: workDateList
+            }
+            try {
+                const applyResponse = await fetch(applyUrl, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${loginKey}`
+                    },
+                    body: JSON.stringify(data)
+                  })
+                  const responseData = await applyResponse.json()
+                  console.log(responseData)
+                  if (responseData.data.errorMessage == "만료된 access token 입니다.") {
+                    $w("#button21").label = "로그인 만료되었습니다. 재로그인 부탁드립니다."
+                  }
+                  else if(responseData.data.errorMessage) {
+                    $w("#button21").label = responseData.data.errorMessage
+                  }
+                  else {
+                    wixLocation.to(`/news-1`);
+                  }
+            }
+            catch (error) {
+                console.log('Error:',error)
+            }
+        })
+    }
+    else {
+        wixLocation.to(`/로그인`);
+    }
 
 });
 
