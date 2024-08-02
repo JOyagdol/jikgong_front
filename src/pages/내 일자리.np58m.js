@@ -38,7 +38,7 @@ function initComponents() {
   }
 
 async function render(){
-    const jobUrl = "https://asdfdsas.p-e.kr/api/apply/worker/pending"
+    const jobUrl = "https://asdfdsas.p-e.kr/api/apply/worker/future"
 
     const jobResponse = await fetch(jobUrl, {
     method: "GET",
