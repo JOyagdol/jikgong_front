@@ -38,68 +38,61 @@ function initComponents() {
   }
 
 async function render(){
-    const jobUrl = "https://asdfdsas.p-e.kr/api/apply/worker/future"
+  const jobUrl = "https://asdfdsas.p-e.kr/api/apply/worker/future"
 
-    const jobResponse = await fetch(jobUrl, {
-    method: "GET",
-    headers: {
-        'Authorization': `Bearer ${loginKey}`
-    }
-    })
-    
-    // repeater 개수 늘어나는 경우 페이지 처리?
-    var responseData = await jobResponse.json()
-    if (responseData.data.errorMessage == "만료된 access token 입니다.") {
-        $w('#section1regulartitle1').text = "로그인이 만료되었습니다!"
-        $w('#text155').text = "다시 로그인 시도 부탁드려요"
-        $w('#section1').collapse();
-    }
-    else if (responseData.data.errorMessage) {
-      $w('#section1regulartitle1').text = responseData.data.errorMessage
-      $w('#text155').collapse();
+  const jobResponse = await fetch(jobUrl, {
+  method: "GET",
+  headers: {
+      'Authorization': `Bearer ${loginKey}`
+  }
+  })
+  
+  // repeater 개수 늘어나는 경우 페이지 처리?
+  var responseData = await jobResponse.json()
+  if (responseData.data.errorMessage == "만료된 access token 입니다.") {
+      $w('#section1regulartitle1').text = "로그인이 만료되었습니다!"
+      $w('#text155').text = "다시 로그인 시도 부탁드려요"
+      $w('#section1').collapse();
+  }
+  else if (responseData.data.errorMessage) {
+    $w('#section1regulartitle1').text = responseData.data.errorMessage
+    $w('#text155').collapse();
+    $w('#section1').collapse();
+  }
+  else {
+    if(responseData.data.length == 0) {
+      $w('#section1regulartitle1').text = "지원하신 일자리가 없습니다!"
+      $w('#text155').text = "구인공고로 가서 일자리를 지원해보세요"
       $w('#section1').collapse();
     }
     else {
-      if(responseData.data.length == 0) {
-        $w('#section1regulartitle1').text = "지원하신 일자리가 없습니다!"
-        $w('#text155').text = "구인공고로 가서 일자리를 지원해보세요"
-        $w('#section1').collapse();
+      $w('#Section1Regular').collapse();
+      console.log(responseData)
+      for(let i=0;i<responseData.data.length;i++) {
+        responseData.data[i]._id = `${i+1}`
       }
-      else {
-        $w('#Section1Regular').collapse();
-        console.log(responseData)
-        for(let i=0;i<responseData.data.length;i++) {
-          responseData.data[i]._id = `${i+1}`
-        }
-        $w('#listRepeater').data = []
-        $w('#listRepeater').data = responseData.data
-      }
-      
+      $w('#listRepeater').data = []
+      $w('#listRepeater').data = responseData.data
     }
     
-    
-
+  }
 }  
 
 function initRepeater() {
-    $w('#listRepeater').onItemReady(($item, itemData, index) => {
+  $w('#listRepeater').onItemReady(($item, itemData, index) => {
 
-        initItemWorkingDate($item, itemData)
-        initItemTechTag($item, itemData)
-        initItemTitle($item, itemData)
-        initItemButtion($item, itemData)
-        initItemStatus($item, itemData)
-        initItemTimeStamp($item, itemData)
-        //initItemPicture($item, itemData)
+    initItemWorkingDate($item, itemData)
+    initItemTechTag($item, itemData)
+    initItemTitle($item, itemData)
+    initItemButtion($item, itemData)
+    initItemStatus($item, itemData)
+    initItemTimeStamp($item, itemData)
+  
 
-    });
+  });
 }
 function initItemTitle($item, itemData) {
     $item("#title").text = itemData.jobPostResponse.title;
-  }
-  
-  function initItemPicture($item, itemData) {
-    $item("#image1").picture.src = itemData.thumbnailS3Url;
   }
   
   function initItemWorkingDate($item, itemData) {
@@ -116,6 +109,7 @@ function initItemTitle($item, itemData) {
 
   function initItemButtion($item, itemData) {
     $item("#button9").onClick(async () => {
+      // itemData.timePassed => n일 전, 2<=n
       const deleteUrl = "https://asdfdsas.p-e.kr/api/apply/worker/"+`${itemData.applyId}`
       const deleteResponse = await fetch(deleteUrl, {
         method: "DELETE",
@@ -123,9 +117,8 @@ function initItemTitle($item, itemData) {
             'Authorization': `Bearer ${loginKey}`
         }
         })
-        
         var responseData = await deleteResponse.json()
-        console.log(responseData);
+        // 이거 예외처리 출력을 어떻게 하지,,,
         render();
     })
   }
