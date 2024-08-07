@@ -132,6 +132,7 @@ function initItemTitle($item, itemData) {
 
 
 function initItemStatus($item, itemData) {
+  // 색 적용
   if(itemData.status == "PENDING") $item("#text159").text = "대기중"
   else if(itemData.status == "REJECTED") $item("#text159").text = "거절됨"
   else if(itemData.status == "ACCEPTED") $item("#text159").text = "수락됨"
