@@ -61,11 +61,13 @@ $w.onReady(async function () {
                   })
                   const responseData = await applyResponse.json()
                   console.log(responseData)
-                  if (responseData.data.errorMessage == "만료된 access token 입니다.") {
-                    $w("#button21").label = "로그인 만료되었습니다. 재로그인 부탁드립니다."
-                  }
-                  else if(responseData.data.errorMessage) {
-                    $w("#button21").label = responseData.data.errorMessage
+                  if(responseData.message == "커스텀 예외 반환") {
+                    if (responseData.data.errorMessage == "만료된 access token 입니다.") {
+                        $w("#button21").label = "로그인 만료되었습니다. 재로그인 부탁드립니다."
+                      }
+                      else if(responseData.data.errorMessage) {
+                        $w("#button21").label = responseData.data.errorMessage
+                      }
                   }
                   else {
                     wixLocation.to(`/news-1`);

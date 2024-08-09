@@ -2,7 +2,7 @@
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
 import { fetch, getJSON } from 'wix-fetch';
 import { getDataWithGetMethod } from "backend/dataFetcher";
-import wixLocation from 'wix-location-frontend';
+import wixLocation, { to } from 'wix-location-frontend';
 import wixWindow from 'wix-window-frontend';
 import { session } from 'wix-storage-frontend';
 
@@ -22,6 +22,7 @@ $w.onReady(async function () {
           $w("#button4").label = "로그인"
           wixLocation.to(`/`);
       })
+      $w("#text160").collapse();
       initComponents()
       render()
     }
@@ -67,7 +68,6 @@ async function render(){
     }
     else {
       $w('#Section1Regular').collapse();
-      console.log(responseData)
       for(let i=0;i<responseData.data.length;i++) {
         responseData.data[i]._id = `${i+1}`
       }
@@ -108,18 +108,41 @@ function initItemTitle($item, itemData) {
   }
 
   function initItemButtion($item, itemData) {
+    
+    // 삭제 예외처리 테스트 해야함
     $item("#button9").onClick(async () => {
-      // itemData.timePassed => n일 전, 2<=n
-      const deleteUrl = "https://asdfdsas.p-e.kr/api/apply/worker/"+`${itemData.applyId}`
-      const deleteResponse = await fetch(deleteUrl, {
-        method: "DELETE",
-        headers: {
-            'Authorization': `Bearer ${loginKey}`
-        }
-        })
-        var responseData = await deleteResponse.json()
-        // 이거 예외처리 출력을 어떻게 하지,,,
-        render();
+      let today = new Date();
+      let month = today.getMonth()+1
+      var currentToday = today.getFullYear() + "-" + 0 + month + "-" + today.getDate();
+
+      let workDate = new Date(itemData.workDate);
+      let currentDate = new Date(currentToday);
+      let diff = workDate.getTime() - currentDate.getTime();
+      diff = diff / (1000 * 60 * 60 * 24);
+      if(diff >= 3 || diff < 0) {
+        const deleteUrl = "https://asdfdsas.p-e.kr/api/apply/worker/"+`${itemData.applyId}`
+        const deleteResponse = await fetch(deleteUrl, {
+          method: "DELETE",
+          headers: {
+              'Authorization': `Bearer ${loginKey}`
+          }
+          })
+          var responseData = await deleteResponse.json()
+          console.log(responseData)
+          if(responseData.message == "커스텀 예외 반환") {
+            $w("#text160").expand();
+            $w("#text160").text = responseData.data.errorMessage;
+          }
+          else {
+            $w("#text160").collapse();
+          }
+          render();
+      }
+      else {
+        $item("#button9").label = "취소불가";
+      }
+      
+      
     })
   }
 
