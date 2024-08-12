@@ -137,7 +137,9 @@ function initItemTime($item, itemData) {
 }
 
 function initItemWage($item, itemData) {
-  $item("#text8").text = `${itemData.wage}`+"원";
+  var amount = Number(itemData.wage);
+  var formmatedAmout = amount.toLocaleString('ko-KR');
+  $item("#text8").text = `${formmatedAmout}`+"원";
 }
 
 function initItemWorkingDate($item, itemData) {

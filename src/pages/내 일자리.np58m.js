@@ -30,7 +30,6 @@ $w.onReady(async function () {
       $w('#section1regulartitle1').text = "로그인 후 이용 가능합니다"
       $w('#text155').text = "회원가입 후 로그인 부탁드립니다"
       $w('#section1').collapse();
-      wixLocation.to(`/로그인`);
     }
 });
 
