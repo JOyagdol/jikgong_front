@@ -22,13 +22,15 @@ $w.onReady(async function () {
           $w("#button4").label = "로그인"
           wixLocation.to(`/`);
       })
+      $w("#button10").collapse();
+      $w("#button22").collapse();
       $w("#text160").collapse();
       initComponents()
       render()
     }
     else {
       $w('#section1regulartitle1').text = "로그인 후 이용 가능합니다"
-      $w('#text155').text = "회원가입 후 로그인 부탁드립니다"
+      $w('#text155').collapse();
       $w('#section1').collapse();
     }
 });
@@ -149,13 +151,19 @@ function initItemTitle($item, itemData) {
 function initItemStatus($item, itemData) {
   // 색 적용
   if(itemData.status == "PENDING") {
-    $item("#text159").text = "대기중"
-    $item("#button9").style.color = "#DFDFDF"
+    $item("#button21").label = "대기중"
+    $item("#button21").style.color = "#DFDFDF"
   }
-  else if(itemData.status == "REJECTED") $item("#text159").text = "거절됨"
-  else if(itemData.status == "ACCEPTED") $item("#text159").text = "수락됨"
-  else if(itemData.status == "CANCELED") $item("#text159").text = "취소됨"
-  else if(itemData.status == "OFFERED") $item("#text159").text = "제안됨"
+  else if(itemData.status == "REJECTED") {
+    $item("#button21").label = "거절됨"
+    $item("#button21").style.color = "#FF0000"
+  }
+  else if(itemData.status == "ACCEPTED") {
+    $item("#button21").label = "수락됨"
+    $item("#button21").style.color = "#00FF00"
+  } 
+  else if(itemData.status == "CANCELED") $item("#button21").label = "취소됨"
+  else if(itemData.status == "OFFERED") $item("#button21").label = "제안됨"
 }
 
 function initItemTimeStamp($item, itemData) {
