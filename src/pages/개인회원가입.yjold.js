@@ -93,12 +93,13 @@ $w.onReady(function () {
             $w("#text167").show()
             $w("#text167").text = "이미 등록된 id입니다."
         }
-        
     })
 
 
 
     $w("#button21").onClick(() => {
+        
+        
         let password = $w("#input11").value;
         let repassword = $w("#input12").value;
 
@@ -119,6 +120,16 @@ $w.onReady(function () {
             $w("#text170").text = "입력하신 비밀번호와 일치하지 않습니다."
         }
         else {
+            joinData.password = password
+            joinData.workerName = $w("#input3").value
+            joinData.role = "ROLE_WORKER"
+
+            joinData.deviceToken = "token"
+            joinData.isNotification = "true"
+            let birthDate = $w("#datePicker1").value
+            joinData.birth = formatDate(birthDate)            
+
+
             // 회원가입 패치
         }
     })
@@ -127,4 +138,12 @@ $w.onReady(function () {
 function validatePhoneNumber(phoneNumber) {
     const phoneRegex = /^010\d{8}$/;
     return phoneRegex.test(phoneNumber);
+}
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+    const day = ('0' + date.getDate()).slice(-2); 
+
+    return `${year}${month}${day}`;
 }
