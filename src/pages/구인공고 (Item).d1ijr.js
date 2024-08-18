@@ -46,6 +46,9 @@ $w.onReady(async function () {
       sectionTag.push( {'label':'주차무료','value':`${data.park}`});
       $w("#text155").text = data.parkDetail;
     }
+    else {
+      $w("#text155").text = data.parkDetail;
+    }
       
     $w("#selectionTags4").options = sectionTag;
     
@@ -106,6 +109,11 @@ $w.onReady(async function () {
     //작업 장소
     $w("#text132").text = data.workAddress
     $w("#text174").text = data.workAddress
+
+
+
+
+
     // 지도
     const mapUrl = `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(data.workAddress)}`
     const ApiKey = await getApiKey() //"483e4425efc50d6891881bece6845a9e"
