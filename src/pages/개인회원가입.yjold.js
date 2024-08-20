@@ -147,7 +147,8 @@ $w.onReady(function () {
             }
             
             let address = $w("#addressInput1").value
-            if(!joinData.address) {
+            
+            if(!address) {
                 checkJoinData = "false"
                 $w("#button21").label = "주소를 입력해주세요."
             }
@@ -186,14 +187,12 @@ $w.onReady(function () {
     
                 if (responseJoinData.message == "노동자 회원 가입 완료") {
                     $w("#button21").label = responseJoinData.message
-                    wixLocation.to(`/로그인`);
+                    
+                    setTimeout(() => wixLocation.to(`/로그인`),3000)
                 }
                 else {
                     $w("#button21").label = "회원 가입 오류 : 재작성 및 재시도 부탁드립니다."
                 }
-            }
-            else {
-                $w("#button21").label = "회원 정보를 올바르게 입력해주세요."
             }
         }
     })

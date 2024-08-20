@@ -34,7 +34,7 @@ async function render(){
     var date_search = $w("#input1").value;
     var meal_search = $w("#dropdown2").value;
     var park_search = $w("#dropdown3").value;
-    var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?size=20&`
+    var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?size=12&`
     if(tech_search != null && tech_search != "") {
       url += `tech=${tech_search}&`
     }
@@ -61,8 +61,6 @@ async function render(){
   });
   for(let i=0;i < data.content.length;i++) {
     data.content[i]._id = `${i+1}`
-    data.content[i].dlPP = `${i+1}`
-    data.content[i].occupation = `${{"civil" : true, "electricity" : true}}`
   }
   console.log(data);
   $w("#listRepeater").data = []
