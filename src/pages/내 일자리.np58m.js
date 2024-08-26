@@ -72,6 +72,7 @@ async function render(){
       for(let i=0;i<responseData.data.length;i++) {
         responseData.data[i]._id = `${i+1}`
       }
+      console.log(responseData);
       $w('#listRepeater').data = []
       $w('#listRepeater').data = responseData.data
     }
@@ -85,7 +86,8 @@ function initRepeater() {
     initItemWorkingDate($item, itemData)
     initItemTechTag($item, itemData)
     initItemTitle($item, itemData)
-    initItemButtion($item, itemData)
+    initItemDeleteButton($item, itemData)
+    initItemStatusButton($item, itemData)
     initItemStatus($item, itemData)
     initItemTimeStamp($item, itemData)
   
@@ -108,7 +110,7 @@ function initItemTitle($item, itemData) {
       $item("#text157").text = "타일"
   }
 
-  function initItemButtion($item, itemData) {
+  function initItemDeleteButton($item, itemData) {
     
     // 삭제 예외처리 테스트 해야함
     $item("#button9").onClick(async () => {
@@ -168,4 +170,10 @@ function initItemStatus($item, itemData) {
 
 function initItemTimeStamp($item, itemData) {
   $item("#text126").text = itemData.timePassed;
+}
+
+function initItemStatusButton($item, itemData) {
+  $item("#button21").onClick(() => {
+    wixLocation.to(`/내일자리상세보기?jobPostId=${itemData.jobPostResponse.postId}&workDate=${itemData.workDate}&applyId=${itemData.applyId}`);
+  })
 }
