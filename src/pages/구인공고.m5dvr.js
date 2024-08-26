@@ -1,4 +1,5 @@
 import { getDataWithGetMethod } from "backend/dataFetcher";
+import { sort } from "wix-data";
 import wixLocation from 'wix-location-frontend';
 import { session } from "wix-storage-frontend";
 
@@ -48,22 +49,26 @@ function initComponents() {
 
 async function render(){
   var tech_search = $w("#dropdown4").value;
-  var date_search = $w("#input1").value;
+  var date_search = $w("#datePicker1").value;
   var meal_search = $w("#dropdown2").value;
   var park_search = $w("#dropdown3").value;
+  var sort_serach = $w("#dropdown5").value;
   var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?page=${currentPage}&size=${itemsPerPage}&`
   if(tech_search != null && tech_search != "") {
     url += `tech=${tech_search}&`
   }
   
   if(date_search != null && date_search != "") {
-    url += `workDateList=${date_search}&`
+    url += `workDateList=${formatDate(date_search)}&`
   }
   if(meal_search != null && meal_search != "") {
     url += `meal=${meal_search}&`
   }
   if(park_search != null && park_search != "") {
     url += `park=${park_search}`
+  }
+  if(sort_serach != null && sort_serach != "") {
+    url += `sortType=${sort_serach}`
   }
   else {
     url = url.slice(0, url.length-1)
@@ -79,8 +84,6 @@ async function render(){
   var { data, message } = await getDataWithGetMethod({
     url: url,
   });
-  console.log(data.content.length);
-
   
   if(data.content.length == 0) {
     $w("#nextButton").disable();
@@ -173,6 +176,13 @@ function initItemCompany($item, itemData) {
   $item("#text156").text = itemData.companyName;
 }
 
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+  const day = ('0' + date.getDate()).slice(-2); 
+
+  return `${year}-${month}-${day}`;
+}
 
 // function initItemDescription($item, itemData, itemIndex) {
 //   const itemDescription = itemData.description;
