@@ -2,6 +2,9 @@ import { getDataWithGetMethod } from "backend/dataFetcher";
 import wixLocation from 'wix-location-frontend';
 import { session } from "wix-storage-frontend";
 
+let currentPage = 0;
+const itemsPerPage = 8;
+
 $w.onReady(async function () {
   // 기존 데이터 초기화 + 데이터 받아오기
   var loginKey = session.getItem("loginKey");
@@ -14,6 +17,8 @@ $w.onReady(async function () {
     })
   }
 
+  
+
   $w('#listRepeater').data = []
   initComponents()
   render()
@@ -23,6 +28,18 @@ $w.onReady(async function () {
     initComponents()
     render();
   })
+
+  $w("#nextButton").onClick(() => {
+    currentPage++;
+    render();
+  });
+
+  $w("#prevButton").onClick(() => {
+    if (currentPage > 0) {
+      currentPage--;
+      render();
+    }
+  });
 });
 
 function initComponents() {
@@ -30,41 +47,56 @@ function initComponents() {
 }
 
 async function render(){
-    var tech_search = $w("#dropdown4").value;
-    var date_search = $w("#input1").value;
-    var meal_search = $w("#dropdown2").value;
-    var park_search = $w("#dropdown3").value;
-    var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?size=12&`
-    if(tech_search != null && tech_search != "") {
-      url += `tech=${tech_search}&`
-    }
-    
-    if(date_search != null && date_search != "") {
-      url += `workDateList=${date_search}&`
-    }
-    if(meal_search != null && meal_search != "") {
-      url += `meal=${meal_search}&`
-    }
-    if(park_search != null && park_search != "") {
-      url += `park=${park_search}`
-    }
-    else {
-      url = url.slice(0, url.length-1)
-    }
+  var tech_search = $w("#dropdown4").value;
+  var date_search = $w("#input1").value;
+  var meal_search = $w("#dropdown2").value;
+  var park_search = $w("#dropdown3").value;
+  var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?page=${currentPage}&size=${itemsPerPage}&`
+  if(tech_search != null && tech_search != "") {
+    url += `tech=${tech_search}&`
+  }
+  
+  if(date_search != null && date_search != "") {
+    url += `workDateList=${date_search}&`
+  }
+  if(meal_search != null && meal_search != "") {
+    url += `meal=${meal_search}&`
+  }
+  if(park_search != null && park_search != "") {
+    url += `park=${park_search}`
+  }
+  else {
+    url = url.slice(0, url.length-1)
+  }
 
-    if(url[url.length-1] == "&") {
-      url = url.slice(0, url.length-1)
-    }
-    $w("#listRepeater").data = []
-    var { data, message } = await getDataWithGetMethod({
+  if(url[url.length-1] == "&") {
+    url = url.slice(0, url.length-1)
+  }
+
+  $w("#prevButton").enable();
+  $w("#nextButton").enable();
+
+  var { data, message } = await getDataWithGetMethod({
     url: url,
   });
-  for(let i=0;i < data.content.length;i++) {
-    data.content[i]._id = `${i+1}`
+  console.log(data.content.length);
+
+  
+  if(data.content.length == 0) {
+    $w("#nextButton").disable();
+    currentPage--;
   }
-  console.log(data);
-  $w("#listRepeater").data = []
-  $w("#listRepeater").data = data.content;
+  else {
+    $w("#currentPageText").text = `${currentPage + 1}`;
+    for(let i=0;i < data.content.length;i++) {
+      data.content[i]._id = `${i+1}`
+    }
+    $w("#listRepeater").data = []
+    $w("#listRepeater").data = data.content;
+  }
+  if (currentPage == 0) {
+    $w("#prevButton").disable();
+  }
 }
 
 function initRepeater() {
