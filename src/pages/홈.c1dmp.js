@@ -40,15 +40,15 @@ $w.onReady(async function () {
           wixLocation.to(`/로그인`);
           
         })
-        $w("#button4").onClick(() => {
-          session.removeItem("loginKey");
-          $w("#button10").label = "로그인"
-          $w("#button4").label = "로그인"
-          $w("#mobileButton1").label = "로그인"
-          $w("#mobileButton2").label = "회원가입"
-          $w("#mobileButton3").label = "로그인"
-          wixLocation.to(`/로그인`);
-        })
+        // $w("#button4").onClick(() => {
+        //   session.removeItem("loginKey");
+        //   $w("#button10").label = "로그인"
+        //   $w("#button4").label = "로그인"
+        //   $w("#mobileButton1").label = "로그인"
+        //   $w("#mobileButton2").label = "회원가입"
+        //   $w("#mobileButton3").label = "로그인"
+        //   wixLocation.to(`/로그인`);
+        // })
         
       }
       else {
@@ -82,9 +82,9 @@ $w.onReady(async function () {
         $w("#mobileButton1").onClick(() => {
           wixLocation.to(`/로그인`);
         })
-        $w("#button4").onClick(() => {
-          wixLocation.to(`/로그인`);
-        })
+        // $w("#button4").onClick(() => {
+        //   wixLocation.to(`/로그인`);
+        // })
   
       }
       else {
