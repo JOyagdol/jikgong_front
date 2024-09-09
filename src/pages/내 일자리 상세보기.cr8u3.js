@@ -3,7 +3,7 @@
 
 
 import wixLocation from 'wix-location-frontend';
-import wixWindow from 'wix-window-frontend';
+import wixWindowFrontend from "wix-window-frontend";
 import { getDataWithGetMethod } from "backend/dataFetcher";
 import { getApiKey, kakaoApiKey } from "backend/apikey.jsw";
 import { session } from 'wix-storage-frontend';
@@ -11,13 +11,24 @@ import { session } from 'wix-storage-frontend';
 $w.onReady(async function () {
     // Write your JavaScript here
     var loginKey = session.getItem("loginKey");
+    let formFactor = wixWindowFrontend.formFactor; 
     if(loginKey) {
-      $w("#button4").label = "로그아웃"
-      $w("#button4").onClick(() => {
-        session.removeItem("loginKey");
-        $w("#button4").label = "로그인"
-        wixLocation.to(`/`);
+      if(formFactor == "Desktop") {
+        $w("#button4").label = "로그아웃"
+        $w("#button4").onClick(() => {
+          session.removeItem("loginKey");
+          $w("#button4").label = "로그인"
+          wixLocation.to(`/`);
       })
+      }
+      else {
+        $w("#mobileButton3").label = "로그아웃"
+        $w("#mobileButton3").onClick(() => {
+          session.removeItem("loginKey");
+          $w("#mobileButton3").label = "로그인"
+          wixLocation.to(`/`);
+        })  
+      }
     }
     const query = wixLocation.query;
     const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`

@@ -2,6 +2,7 @@ import { getDataWithGetMethod } from "backend/dataFetcher";
 import { sort } from "wix-data";
 import wixLocation from 'wix-location-frontend';
 import { session } from "wix-storage-frontend";
+import wixWindowFrontend from "wix-window-frontend";
 
 let currentPage = 0;
 const itemsPerPage = 8;
@@ -9,13 +10,25 @@ const itemsPerPage = 8;
 $w.onReady(async function () {
   // 기존 데이터 초기화 + 데이터 받아오기
   var loginKey = session.getItem("loginKey");
+  let formFactor = wixWindowFrontend.formFactor; 
   if(loginKey) {
-    $w("#button4").label = "로그아웃"
-    $w("#button4").onClick(() => {
-      session.removeItem("loginKey");
-      $w("#button4").label = "로그인"
-      wixLocation.to(`/`);
+    if(formFactor == "Desktop") {
+      $w("#button4").label = "로그아웃"
+      $w("#button4").onClick(() => {
+        session.removeItem("loginKey");
+        $w("#button4").label = "로그인"
+        wixLocation.to(`/`);
     })
+    }
+    else {
+      $w("#mobileButton3").label = "로그아웃"
+      $w("#mobileButton3").onClick(() => {
+        session.removeItem("loginKey");
+        $w("#mobileButton3").label = "로그인"
+        wixLocation.to(`/`);
+    })
+    }
+    
   }
 
   

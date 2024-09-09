@@ -3,8 +3,8 @@
 import { fetch, getJSON } from 'wix-fetch';
 import { getDataWithGetMethod } from "backend/dataFetcher";
 import wixLocation, { to } from 'wix-location-frontend';
-import wixWindow from 'wix-window-frontend';
 import { session } from 'wix-storage-frontend';
+import wixWindowFrontend from "wix-window-frontend";
 
 var loginKey = session.getItem("loginKey");
 $w.onReady(async function () {
@@ -14,14 +14,24 @@ $w.onReady(async function () {
 
     // Click 'Preview' to run your code
     //button 8 확정
-    
+    let formFactor = wixWindowFrontend.formFactor; 
     if(loginKey) {
-      $w("#button4").label = "로그아웃"
-      $w("#button4").onClick(() => {
+      if(formFactor == "Desktop") {
+        $w("#button4").label = "로그아웃"
+        $w("#button4").onClick(() => {
           session.removeItem("loginKey");
           $w("#button4").label = "로그인"
           wixLocation.to(`/`);
       })
+      }
+      else {
+        $w("#mobileButton3").label = "로그아웃"
+        $w("#mobileButton3").onClick(() => {
+          session.removeItem("loginKey");
+          $w("#mobileButton3").label = "로그인"
+          wixLocation.to(`/`);
+        })  
+      }
       $w("#button10").collapse();
       $w("#button22").collapse();
       $w("#text160").collapse();

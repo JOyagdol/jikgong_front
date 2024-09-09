@@ -9,6 +9,7 @@ $w.onReady(function () {
     // Write your JavaScript here
 
     // To select an element by ID use: $w('#elementID')
+    let formFactor = wixWindowFrontend.formFactor; 
 
     $w('#button21').onClick(async () => {
         const id = $w('#input1').value;
@@ -35,12 +36,14 @@ $w.onReady(function () {
               else {
                 session.setItem("loginKey", responseData.data.accessToken);
                 $w("#text157").text = "로그인이 완료되었습니다.!"
-                $w("#button4").label = "로그아웃"
-                $w("#button4").onClick(() => {
+                if (formFactor == "Desktop") {
+                  $w("#button4").label = "로그아웃"
+                  $w("#button4").onClick(() => {
                     session.removeItem("loginKey");
                     $w("#button4").label = "로그인"
                     wixLocation.to(`/`);
-                  })
+                  })}
+                
                 wixLocation.to(`/`);
               }
         }

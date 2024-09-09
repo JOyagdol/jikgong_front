@@ -4,18 +4,31 @@
 import wixLocation from 'wix-location-frontend';
 import { getDataWithGetMethod } from "backend/dataFetcher";
 import { session } from 'wix-storage-frontend';
+import wixWindowFrontend from "wix-window-frontend";
+
 
 var workDateActive = {};
 const query = wixLocation.query;
 $w.onReady(async function () {
+    let formFactor = wixWindowFrontend.formFactor; 
     var loginKey = session.getItem("loginKey");
     if(loginKey) {
-        $w("#button4").label = "로그아웃"
-        $w("#button4").onClick(() => {
-            session.removeItem("loginKey");
-            $w("#button4").label = "로그인"
-            wixLocation.to(`/`);
-        })
+        if(formFactor == "Desktop") {
+            $w("#button4").label = "로그아웃"
+            $w("#button4").onClick(() => {
+              session.removeItem("loginKey");
+              $w("#button4").label = "로그인"
+              wixLocation.to(`/`);
+          })
+          }
+          else {
+            $w("#mobileButton3").label = "로그아웃"
+            $w("#mobileButton3").onClick(() => {
+              session.removeItem("loginKey");
+              $w("#mobileButton3").label = "로그인"
+              wixLocation.to(`/`);
+            })  
+          }
         const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
         var { data, message } = await getDataWithGetMethod({
             url: url,
