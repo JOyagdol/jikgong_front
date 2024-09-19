@@ -6,6 +6,7 @@ import wixWindowFrontend from "wix-window-frontend";
 
 let currentPage = 0;
 const itemsPerPage = 8;
+let tech_list = {"NORMAL":"보통인부","FOREMAN":"작업반장","SKILLED_LABORER":"특별인부","HELPER":"조력공","SCAFFOLDER":"비계공","FORMWORK_CARPENTER":"형틀목공","REBAR_WORKER":"철근공","STEEL_STRUCTURE_WORKER":"철골공","WELDER":"용접공","CONCRETE_WORKER":"콘크리트공","BRICKLAYER":"조적공","DRYWALL_FINISHER":"견출공","CONSTRUCTION_CARPENTER":"건축목공","WINDOW_DOOR_INSTALLER":"창호공","GLAZIER":"유리공","WATERPROOFING_WORKER":"방수공","PLASTERER":"미장공","TILE":"타일","PAINTER":"도장공","INTERIOR_FINISHER":"내장공","WALLPAPER_INSTALLER":"도배공","POLISHER":"연마공","STONEMASON":"석공","GROUT_WORKER":"줄눈공","PANEL_ASSEMBLER":"판넬조립공","ROOFER":"지붕잇기공","LANDSCAPER":"조경공","CAULKER":"코킹공","PLUMBER":"배관공","BOILER_TECHNICIAN":"보일러공","SANITARY_TECHNICIAN":"위생공","DUCT_INSTALLER":"덕트공","INSULATION_WORKER":"보온공","MECHANICAL_EQUIPMENT_TECHNICIAN":"기계설비공","ELECTRICIAN":"내선전공","TELECOMMUNICATIONS_INSTALLER":"통신내선공","TELECOMMUNICATIONS_EQUIPMENT_INSTALLER":"통신설비공"};
 
 $w.onReady(async function () {
   // 기존 데이터 초기화 + 데이터 받아오기
@@ -98,7 +99,7 @@ async function render(){
     url: url,
   });
   
-  if(data.content.length == 0) {
+  if(data.content.length == 0 && currentPage > 0) {
     $w("#nextButton").disable();
     currentPage--;
   }
@@ -172,11 +173,9 @@ function initItemWorkingDate($item, itemData) {
 }
 
 function initItemTech($item, itemData) {
-  //console.log(itemData.meal, itemData.pickup)
-  if (itemData.tech == "NORMAL")
-    $item("#text154").text = "보통인부"
-  else if (itemData.tech == "TILE")
-    $item("#text154").text = "모집"
+
+  $item("#text154").text = tech_list[itemData.tech]
+  
 }
 
 function initItemButtion($item, itemData) {
