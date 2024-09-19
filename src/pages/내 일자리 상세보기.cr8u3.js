@@ -132,6 +132,8 @@ $w.onReady(async function () {
     $w("#text166").text = data.phone
     $w("#text167").text = data.manager
 
+    // 요청사항
+    $w("#text182").text = data.description
     
     $w("#button21").onClick(async () => {
         let today = new Date();
