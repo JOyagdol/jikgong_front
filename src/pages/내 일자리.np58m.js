@@ -6,6 +6,8 @@ import wixLocation, { to } from 'wix-location-frontend';
 import { session } from 'wix-storage-frontend';
 import wixWindowFrontend from "wix-window-frontend";
 
+let tech_list = {"NORMAL":"보통인부","FOREMAN":"작업반장","SKILLED_LABORER":"특별인부","HELPER":"조력공","SCAFFOLDER":"비계공","FORMWORK_CARPENTER":"형틀목공","REBAR_WORKER":"철근공","STEEL_STRUCTURE_WORKER":"철골공","WELDER":"용접공","CONCRETE_WORKER":"콘크리트공","BRICKLAYER":"조적공","DRYWALL_FINISHER":"견출공","CONSTRUCTION_CARPENTER":"건축목공","WINDOW_DOOR_INSTALLER":"창호공","GLAZIER":"유리공","WATERPROOFING_WORKER":"방수공","PLASTERER":"미장공","TILE":"타일","PAINTER":"도장공","INTERIOR_FINISHER":"내장공","WALLPAPER_INSTALLER":"도배공","POLISHER":"연마공","STONEMASON":"석공","GROUT_WORKER":"줄눈공","PANEL_ASSEMBLER":"판넬조립공","ROOFER":"지붕잇기공","LANDSCAPER":"조경공","CAULKER":"코킹공","PLUMBER":"배관공","BOILER_TECHNICIAN":"보일러공","SANITARY_TECHNICIAN":"위생공","DUCT_INSTALLER":"덕트공","INSULATION_WORKER":"보온공","MECHANICAL_EQUIPMENT_TECHNICIAN":"기계설비공","ELECTRICIAN":"내선전공","TELECOMMUNICATIONS_INSTALLER":"통신내선공","TELECOMMUNICATIONS_EQUIPMENT_INSTALLER":"통신설비공"};
+
 var loginKey = session.getItem("loginKey");
 $w.onReady(async function () {
     // Write your JavaScript here
@@ -114,10 +116,7 @@ function initItemTitle($item, itemData) {
   
   function initItemTechTag($item, itemData) {
     //console.log(itemData.meal, itemData.pickup)
-    if (itemData.jobPostResponse.tech == "NORMAL")
-      $item("#text157").text = "보통인부"
-    else if (itemData.jobPostResponse.tech == "TILE")
-      $item("#text157").text = "타일"
+    $item("#text157").text = tech_list[itemData.jobPostResponse.tech]
   }
 
   function initItemDeleteButton($item, itemData) {
