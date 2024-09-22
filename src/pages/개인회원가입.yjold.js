@@ -2,12 +2,18 @@
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
 
 import wixLocation from 'wix-location-frontend';
+import { purchasePlan } from 'wix-paid-plans';
 
 var checkPhoneCode = "false";
 var checkRepeatPhone = "false";
 var checkRepeatId = "false";
 var checkJoinData = "true";
 var authPhoneCode;
+
+var hasVisa = false;
+var hasEducationCertificate = false;
+var hasWorkerCard = false;
+var privacyConsent = false;
 
 var joinData = {}
 
@@ -16,9 +22,63 @@ $w.onReady(function () {
     $w("#text167").hide()
     $w("#text170").hide()
 
+    // visa
+    $w("#text171").collapse()
+    $w("#line10").collapse()
+    $w("#checkbox1").collapse()
+    
+    $w("#dropdown1").onChange(() => {
+        if($w("#dropdown1").value == "외국인") {
+            $w("#text171").expand()
+            $w("#line10").expand()
+            $w("#checkbox1").expand()
+        }
+        else {
+            $w("#text171").collapse()
+            $w("#line10").collapse()
+            $w("#checkbox1").collapse()
+        }
+    })
+
+    $w("#checkbox1").onClick(() => {
+        if(hasVisa == false) {
+            hasVisa = true
+        }
+        else {
+            hasVisa = false
+        }
+    })
+
+    $w("#checkbox2").onClick(() => {
+        if(hasEducationCertificate == false) {
+            hasEducationCertificate = true
+        }
+        else {
+            hasEducationCertificate = false
+        }
+    })
+
+    $w("#checkbox3").onClick(() => {
+        if(hasWorkerCard == false) {
+            hasWorkerCard = true
+        }
+        else {
+            hasWorkerCard = false
+        }
+    })
+
+    $w("#checkbox4").onClick(() => {
+        if(privacyConsent == false) {
+            privacyConsent = true
+        }
+        else {
+            privacyConsent = false
+        }
+    })
 
     
-    
+
+
     $w("#button22").onClick(async () => {
         let phoneNum = $w("#input1").value
         joinData.phone = phoneNum
@@ -173,6 +233,12 @@ $w.onReady(function () {
                 checkJoinData = "false"
                 $w("#button21").label = "계좌번호를 입력해주세요."
             }
+
+            joinData.hasVisa = hasVisa;
+            joinData.hasEducationCertificate = hasEducationCertificate;
+            joinData.hasWorkerCard = hasWorkerCard;
+            joinData.privacyConsent = privacyConsent;            
+
 
             if(checkJoinData == "true") {
                 const joinUrl = "https://asdfdsas.p-e.kr/api/join/worker/join"
