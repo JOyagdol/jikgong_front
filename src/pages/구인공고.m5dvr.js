@@ -46,12 +46,14 @@ $w.onReady(async function () {
 
   $w("#nextButton").onClick(() => {
     currentPage++;
+    $w('#listRepeater').data = []
     render();
   });
 
   $w("#prevButton").onClick(() => {
     if (currentPage > 0) {
       currentPage--;
+      $w('#listRepeater').data = []
       render();
     }
   });
