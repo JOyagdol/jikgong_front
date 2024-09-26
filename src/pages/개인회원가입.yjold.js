@@ -2,7 +2,10 @@
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
 
 import wixLocation from 'wix-location-frontend';
-import { purchasePlan } from 'wix-paid-plans';
+import { onConsentPolicyChanged } from 'wix-users';
+import wixWindow from 'wix-window-frontend';
+
+let tech_list = {"NORMAL":"보통인부","FOREMAN":"작업반장","SKILLED_LABORER":"특별인부","HELPER":"조력공","SCAFFOLDER":"비계공","FORMWORK_CARPENTER":"형틀목공","REBAR_WORKER":"철근공","STEEL_STRUCTURE_WORKER":"철골공","WELDER":"용접공","CONCRETE_WORKER":"콘크리트공","BRICKLAYER":"조적공","DRYWALL_FINISHER":"견출공","CONSTRUCTION_CARPENTER":"건축목공","WINDOW_DOOR_INSTALLER":"창호공","GLAZIER":"유리공","WATERPROOFING_WORKER":"방수공","PLASTERER":"미장공","TILE":"타일","PAINTER":"도장공","INTERIOR_FINISHER":"내장공","WALLPAPER_INSTALLER":"도배공","POLISHER":"연마공","STONEMASON":"석공","GROUT_WORKER":"줄눈공","PANEL_ASSEMBLER":"판넬조립공","ROOFER":"지붕잇기공","LANDSCAPER":"조경공","CAULKER":"코킹공","PLUMBER":"배관공","BOILER_TECHNICIAN":"보일러공","SANITARY_TECHNICIAN":"위생공","DUCT_INSTALLER":"덕트공","INSULATION_WORKER":"보온공","MECHANICAL_EQUIPMENT_TECHNICIAN":"기계설비공","ELECTRICIAN":"내선전공","TELECOMMUNICATIONS_INSTALLER":"통신내선공","TELECOMMUNICATIONS_EQUIPMENT_INSTALLER":"통신설비공"};
 
 var checkPhoneCode = "false";
 var checkRepeatPhone = "false";
@@ -15,6 +18,8 @@ var hasEducationCertificate = false;
 var hasWorkerCard = false;
 var privacyConsent = false;
 
+var workExperienceRequest = []
+var workExperienceTag = []
 var joinData = {}
 
 $w.onReady(function () {
@@ -22,6 +27,7 @@ $w.onReady(function () {
     $w("#text167").hide()
     $w("#text170").hide()
 
+    $w("#selectionTags2").options = workExperienceTag
     // visa
     $w("#text171").collapse()
     $w("#line10").collapse()
@@ -39,6 +45,9 @@ $w.onReady(function () {
             $w("#checkbox1").collapse()
         }
     })
+
+
+
 
     $w("#checkbox1").onClick(() => {
         if(hasVisa == false) {
@@ -76,7 +85,29 @@ $w.onReady(function () {
         }
     })
 
+    $w("#button25").onClick(async () => {
+        let result = await wixWindow.openLightbox("경력추가");
+        
+        let tag = `${tech_list[result.tech]}`+" : "+result.year+"년 "+result.month+"개월"
+        workExperienceTag.push({
+            'value':tag,
+            'label':tag
+        })
+
+        workExperienceRequest.push({
+            "tech":result.tech,
+            "experienceMonths":result.year*12 + result.month
+        })
+        console.log(workExperienceTag)
+        $w("#selectionTags2").options = workExperienceTag
+
+    })
     
+    $w("#button26").onClick(() => {
+        workExperienceRequest = []
+        workExperienceTag = []
+        $w("#selectionTags2").options = workExperienceTag
+    })
 
 
     $w("#button22").onClick(async () => {
@@ -233,6 +264,8 @@ $w.onReady(function () {
                 checkJoinData = "false"
                 $w("#button21").label = "계좌번호를 입력해주세요."
             }
+
+            joinData.workExperienceRequest = workExperienceRequest;
 
             joinData.hasVisa = hasVisa;
             joinData.hasEducationCertificate = hasEducationCertificate;
