@@ -239,6 +239,10 @@ $w.onReady(function () {
             joinData.hasWorkerCard = hasWorkerCard;
             joinData.privacyConsent = privacyConsent;            
 
+            if(!joinData.privacyConsent) {
+                checkJoinData = "false"
+                $w("#button21").label = "개인정보 수집 동의해주세요."
+            }
 
             if(checkJoinData == "true") {
                 const joinUrl = "https://asdfdsas.p-e.kr/api/join/worker/join"
