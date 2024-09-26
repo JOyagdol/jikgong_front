@@ -163,7 +163,7 @@ function initItemStatus($item, itemData) {
   // 색 적용
   if(itemData.status == "PENDING") {
     $item("#button21").label = "대기중"
-    $item("#button21").style.color = "#DFDFDF"
+    $item("#button21").style.color = "#757575"
   }
   else if(itemData.status == "REJECTED") {
     $item("#button21").label = "거절됨"
@@ -171,7 +171,7 @@ function initItemStatus($item, itemData) {
   }
   else if(itemData.status == "ACCEPTED") {
     $item("#button21").label = "수락됨"
-    $item("#button21").style.color = "#00FF00"
+    $item("#button21").style.color = "#00B050"
   } 
   else if(itemData.status == "CANCELED") $item("#button21").label = "취소됨"
   else if(itemData.status == "OFFERED") $item("#button21").label = "제안됨"
