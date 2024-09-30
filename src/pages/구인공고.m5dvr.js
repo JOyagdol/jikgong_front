@@ -11,26 +11,6 @@ let tech_list = {"NORMAL":"보통인부","FOREMAN":"작업반장","SKILLED_LABOR
 $w.onReady(async function () {
   // 기존 데이터 초기화 + 데이터 받아오기
   var loginKey = session.getItem("loginKey");
-  let formFactor = wixWindowFrontend.formFactor; 
-  if(loginKey) {
-    if(formFactor == "Desktop") {
-      $w("#button4").label = "로그아웃"
-      $w("#button4").onClick(() => {
-        session.removeItem("loginKey");
-        $w("#button4").label = "로그인"
-        wixLocation.to(`/`);
-    })
-    }
-    else {
-      $w("#mobileButton3").label = "로그아웃"
-      $w("#mobileButton3").onClick(() => {
-        session.removeItem("loginKey");
-        $w("#mobileButton3").label = "로그인"
-        wixLocation.to(`/`);
-    })
-    }
-    
-  }
 
   
 

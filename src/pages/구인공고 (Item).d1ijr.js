@@ -14,37 +14,6 @@ let tech_list = {"NORMAL":"보통인부","FOREMAN":"작업반장","SKILLED_LABOR
 $w.onReady(async function () {
     // Write your JavaScript here
     var loginKey = session.getItem("loginKey");
-    let formFactor = wixWindowFrontend.formFactor; 
-    if(loginKey) {
-      if(formFactor == "Desktop") {
-        $w("#button4").label = "로그아웃"
-        $w("#button4").onClick(() => {
-          session.removeItem("loginKey");
-          $w("#button4").label = "로그인"
-          $w("#button20").label = "회원가입"
-          $w("#button20").link = "/회원가입"
-          wixLocation.to(`/`);
-        })
-        $w("#button20").label = "내 정보"
-        $w("#button20").onClick(() => {
-          wixLocation.to('/내정보')
-        })
-      }
-      else {
-        $w("#mobileButton3").label = "로그아웃"
-        $w("#mobileButton3").onClick(() => {
-          session.removeItem("loginKey");
-          $w("#mobileButton3").label = "로그인"
-          $w("#mobileButton2").label = "회원가입"
-          $w("#mobileButton2").link = "/회원가입"
-          wixLocation.to(`/`);
-        })  
-        $w("#mobileButton2").label = "내 정보"
-        $w("#mobileButton2").onClick(() => {
-          wixLocation.to('/내정보')
-        })
-      }
-    }
     const query = wixLocation.query;
     const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
     var { data, message } = await getDataWithGetMethod({
