@@ -39,9 +39,7 @@ $w.onReady(async function () {
         })
 
     var responseData = await myInfoResponse.json()
-
     console.log(responseData)
-
     //personal info
     $w("#input1").value = responseData.data.phone;
 
@@ -52,6 +50,19 @@ $w.onReady(async function () {
     $w("#dropdown1").value = responseData.data.nationality;
 
     $w("#selectionTags1").value = responseData.data.gender;
+
+    //주소 표시
+    let addressUrl = "https://asdfdsas.p-e.kr/api/location/list"
+
+    const addressResponse = await fetch(addressUrl, {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${loginKey}`
+            }
+        })
+    
+    var addressResponseData = await addressResponse.json();
+    console.log(addressResponseData)
 
     //workExperience
     var workExperienceTag = []
@@ -83,5 +94,11 @@ $w.onReady(async function () {
         $w("#checkbox3").checked = true
     }
 
+
+    // 개인 정보 수정하기 + 주소 수정하기
+
+    $w("#button21").onClick(() => {
+
+    })
     
 });
