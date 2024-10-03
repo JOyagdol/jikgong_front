@@ -40,6 +40,7 @@ $w.onReady(async function () {
 
     var responseData = await myInfoResponse.json()
     console.log(responseData)
+    
     //personal info
     $w("#input1").value = responseData.data.phone;
 
