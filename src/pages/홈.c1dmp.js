@@ -11,11 +11,9 @@ $w.onReady(async function () {
     if(loginKey) {
       $w("#button10").label = "로그아웃"
       $w("#button4").label = "로그아웃"
-      $w("#button9").label = "문의하기"
-      $w("#mobileButton5").label = "문의하기"
       $w("#mobileButton3").label = "로그아웃"
       $w("#mobileButton1").label = "로그아웃"
-      // $w("#mobileButton2").label = "내 정보"
+      $w("#mobileButton2").label = "내 정보"
 
       // $w("#mobileButton2").onClick(() => {
       //   wixLocation.to(`/내정보`);
@@ -27,7 +25,6 @@ $w.onReady(async function () {
           session.removeItem("loginKey");
           $w("#button10").label = "로그인"
           $w("#button4").label = "로그인"
-          $w("#button9").label = "회원가입"
           $w("#mobileButton3").label = "로그인"
           $w("#mobileButton2").label = "회원가입"
           $w("#mobileButton1").label = "로그인"
@@ -37,15 +34,11 @@ $w.onReady(async function () {
           session.removeItem("loginKey");
           $w("#button10").label = "로그인"
           $w("#button4").label = "로그인"
-          $w("#button9").label = "회원가입"
           $w("#mobileButton3").label = "로그인"
           $w("#mobileButton2").label = "회원가입"
           $w("#mobileButton1").label = "로그인"
           wixLocation.to(`/로그인`);
           
-        })
-        $w("#mobileButton5").onClick(() => {
-          wixLocation.to(`/contact`);
         })
         // $w("#button4").onClick(() => {
         //   session.removeItem("loginKey");
@@ -63,7 +56,6 @@ $w.onReady(async function () {
           session.removeItem("loginKey");
           $w("#button10").label = "로그인"
           $w("#button4").label = "로그인"
-          $w("#button9").label = "회원가입"
           $w("#mobileButton3").label = "로그인"
           $w("#mobileButton2").label = "회원가입"
           $w("#mobileButton1").label = "로그인"
@@ -73,14 +65,10 @@ $w.onReady(async function () {
           session.removeItem("loginKey");
           $w("#button10").label = "로그인"
           $w("#button4").label = "로그인"
-          $w("#button9").label = "회원가입"
           $w("#mobileButton1").label = "로그인"
           $w("#mobileButton2").label = "회원가입"
           $w("#mobileButton3").label = "로그인"
           wixLocation.to(`/로그인`);
-        })
-        $w("#button9").onClick(() => {
-          wixLocation.to(`/contact`);
         })
       }
 
@@ -98,9 +86,6 @@ $w.onReady(async function () {
         //   wixLocation.to(`/로그인`);
         // })
         
-        $w("#mobileButton5").onClick(() => {
-          wixLocation.to(`/회원가입`);
-        })
       }
       else {
         $w("#button10").onClick(() => {
@@ -108,9 +93,6 @@ $w.onReady(async function () {
         })
         $w("#button4").onClick(() => {
           wixLocation.to(`/로그인`);
-        })
-        $w("#button9").onClick(() => {
-          wixLocation.to(`/회원가입`);
         })
       }
       // $w("#moblieButton2").onClick(() => {
