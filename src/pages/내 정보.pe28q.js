@@ -39,7 +39,6 @@ $w.onReady(async function () {
         })
 
     var responseData = await myInfoResponse.json()
-    console.log(responseData)
     
     //personal info
     $w("#input1").value = responseData.data.phone;
@@ -63,7 +62,11 @@ $w.onReady(async function () {
         })
     
     var addressResponseData = await addressResponse.json();
-    console.log(addressResponseData)
+    for(let i=0;i<addressResponseData.data.length;i++) {
+        if(addressResponseData.data[i].isMain == true) {
+            $w("#addressInput1").placeholder = addressResponseData.data[i].address
+        }
+    }
 
     //workExperience
     var workExperienceTag = []
@@ -95,10 +98,11 @@ $w.onReady(async function () {
         $w("#checkbox3").checked = true
     }
 
-
-    // 개인 정보 수정하기 + 주소 수정하기
-
     $w("#button21").onClick(() => {
+        // 개인 정보 수정
+
+
+        // 주소 수정
 
     })
     
