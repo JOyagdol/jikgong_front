@@ -169,6 +169,33 @@ $w.onReady(async function () {
         }
 
     })
+
+    $w("#button27").onClick(async () => {
+       let curPassword = $w("#input11").value
+       let nextPassword = $w("#input12").value
+       let checkPassword = $w("#input13").value
+
+       if(nextPassword != checkPassword) {
+        $w("#button27").label = "비밀번호 재확인 해주세요."
+       }
+       else {
+        const changePWurl = "https://asdfdsas.p-e.kr/api/member-info/password-validation"
+        const changePWResponse = await fetch(changePWurl, {
+            method: "POST",
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${loginKey}`
+                },
+            body: JSON.stringify({
+                "currentPassword" : curPassword,
+                "newPassword": nextPassword
+            })
+        })
+        var changePWResponseData = await changePWResponse.json()
+        $w("#button27").label = "비밀번호 변경 되었습니다."
+        console.log(changePWResponseData)
+       }
+    })
     
 });
 
