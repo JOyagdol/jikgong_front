@@ -17,6 +17,7 @@ var hasVisa = false;
 var hasEducationCertificate = false;
 var hasWorkerCard = false;
 var privacyConsent = false;
+var credentialLiabilityConsent = false;
 
 var workExperienceRequest = []
 var workExperienceTag = []
@@ -82,6 +83,15 @@ $w.onReady(function () {
         }
         else {
             privacyConsent = false
+        }
+    })
+
+    $w("#checkbox5").onClick(() => {
+        if(credentialLiabilityConsent == false) {
+            credentialLiabilityConsent = true
+        }
+        else {
+            credentialLiabilityConsent = false
         }
     })
 
@@ -270,7 +280,8 @@ $w.onReady(function () {
             joinData.hasVisa = hasVisa;
             joinData.hasEducationCertificate = hasEducationCertificate;
             joinData.hasWorkerCard = hasWorkerCard;
-            joinData.privacyConsent = privacyConsent;            
+            joinData.privacyConsent = privacyConsent;          
+            joinData.credentialLiabilityConsent = credentialLiabilityConsent;  
 
             if(!joinData.privacyConsent) {
                 checkJoinData = "false"
@@ -287,7 +298,7 @@ $w.onReady(function () {
                     body: JSON.stringify(joinData)
                 })
                 const responseJoinData = await joinResponse.json()
-    
+                console.log(responseJoinData)
                 if (responseJoinData.message == "노동자 회원 가입 완료") {
                     $w("#button21").label = responseJoinData.message
                     
