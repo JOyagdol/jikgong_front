@@ -168,6 +168,8 @@ $w.onReady(async function () {
             console.log(locationResponseData)
         }
 
+        wixWindow.openLightbox("내정보수정완료");
+
     })
 
     $w("#button27").onClick(async () => {

@@ -83,7 +83,6 @@ function initRepeater() {
     initItemTechTag($item, itemData)
     initItemTitle($item, itemData)
     initItemDeleteButton($item, itemData)
-    initItemStatusButton($item, itemData)
     initItemStatus($item, itemData)
     initItemTimeStamp($item, itemData)
   
@@ -92,6 +91,9 @@ function initRepeater() {
 }
 function initItemTitle($item, itemData) {
     $item("#title").text = itemData.jobPostResponse.title;
+    $item("#title").onClick(() => {
+      wixLocation.to(`/내일자리-상세보기?jobPostId=${itemData.jobPostResponse.postId}&workDate=${itemData.workDate}&applyId=${itemData.applyId}`);
+    })
   }
   
   function initItemWorkingDate($item, itemData) {
@@ -163,10 +165,4 @@ function initItemStatus($item, itemData) {
 
 function initItemTimeStamp($item, itemData) {
   $item("#text126").text = itemData.timePassed;
-}
-
-function initItemStatusButton($item, itemData) {
-  $item("#button21").onClick(() => {
-    wixLocation.to(`/내일자리-상세보기?jobPostId=${itemData.jobPostResponse.postId}&workDate=${itemData.workDate}&applyId=${itemData.applyId}`);
-  })
 }

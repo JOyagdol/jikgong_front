@@ -38,35 +38,40 @@ $w.onReady(async function () {
                     workDateList.push(key);
                 }
             }
-            var data = {
-                jobPostId: Number(query.jobPostId),
-                workDateList: workDateList
-            }
-            try {
-                const applyResponse = await fetch(applyUrl, {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${loginKey}`
-                    },
-                    body: JSON.stringify(data)
-                  })
-                  const responseData = await applyResponse.json()
-                  console.log(responseData)
-                  if(responseData.message == "커스텀 예외 반환") {
-                    if (responseData.data.errorMessage == "만료된 access token 입니다.") {
-                        $w("#button21").label = "로그인 만료되었습니다. 재로그인 부탁드립니다."
+            if(workDateList.length) {
+                var data = {
+                    jobPostId: Number(query.jobPostId),
+                    workDateList: workDateList
+                }
+                try {
+                    const applyResponse = await fetch(applyUrl, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${loginKey}`
+                        },
+                        body: JSON.stringify(data)
+                      })
+                      const responseData = await applyResponse.json()
+                      console.log(responseData)
+                      if(responseData.message == "커스텀 예외 반환") {
+                        if (responseData.data.errorMessage == "만료된 access token 입니다.") {
+                            $w("#button21").label = "로그인 만료되었습니다. 재로그인 부탁드립니다."
+                          }
+                          else if(responseData.data.errorMessage) {
+                            $w("#button21").label = responseData.data.errorMessage
+                          }
                       }
-                      else if(responseData.data.errorMessage) {
-                        $w("#button21").label = responseData.data.errorMessage
+                      else {
+                        wixLocation.to(`/내일자리`);
                       }
-                  }
-                  else {
-                    wixLocation.to(`/내일자리`);
-                  }
+                }
+                catch (error) {
+                    console.log('Error:',error)
+                }
             }
-            catch (error) {
-                console.log('Error:',error)
+            else {
+                $w("#button21").label = "지원 날짜를 선택해주세요."
             }
         })
     }
@@ -102,6 +107,7 @@ function initRepeater() {
       initItemDate($item, itemData)
       initItemRecruitNum($item, itemData)
       initItemCheckBox($item, itemData)
+      initItemContainer($item, itemData)
     });
   }
 
@@ -130,4 +136,17 @@ function initItemCheckBox($item, itemData) {
             }
         })
     }
+}
+
+function initItemContainer($item, itemData) {
+    $item("#container1").onClick(() => {
+        if (workDateActive[itemData.workDateId] == "Active") {
+            workDateActive[itemData.workDateId] = "DeActive";
+            $item("#checkbox1").checked = false
+        }
+        else {
+            workDateActive[itemData.workDateId] = "Active";
+            $item("#checkbox1").checked = true
+        }
+    })
 }
