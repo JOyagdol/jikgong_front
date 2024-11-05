@@ -132,7 +132,7 @@ $w.onReady(async function () {
                 $w("#button21").label = responseData.data.errorMessage;
             }
             else {
-                wixLocation.to(`/news-1`);
+                wixLocation.to(`/내일자리`);
             }
         }
         else {

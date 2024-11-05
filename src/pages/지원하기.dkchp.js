@@ -62,7 +62,7 @@ $w.onReady(async function () {
                       }
                   }
                   else {
-                    wixLocation.to(`/news-1`);
+                    wixLocation.to(`/내일자리`);
                   }
             }
             catch (error) {

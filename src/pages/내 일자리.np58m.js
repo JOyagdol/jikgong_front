@@ -167,6 +167,6 @@ function initItemTimeStamp($item, itemData) {
 
 function initItemStatusButton($item, itemData) {
   $item("#button21").onClick(() => {
-    wixLocation.to(`/내일자리상세보기?jobPostId=${itemData.jobPostResponse.postId}&workDate=${itemData.workDate}&applyId=${itemData.applyId}`);
+    wixLocation.to(`/내일자리-상세보기?jobPostId=${itemData.jobPostResponse.postId}&workDate=${itemData.workDate}&applyId=${itemData.applyId}`);
   })
 }

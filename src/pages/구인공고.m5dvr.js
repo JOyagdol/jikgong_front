@@ -10,9 +10,6 @@ let tech_list = {"NORMAL":"보통인부","FOREMAN":"작업반장","SKILLED_LABOR
 
 $w.onReady(async function () {
   // 기존 데이터 초기화 + 데이터 받아오기
-  var loginKey = session.getItem("loginKey");
-
-  
 
   $w('#listRepeater').data = []
   initComponents()
@@ -162,7 +159,7 @@ function initItemTech($item, itemData) {
 
 function initItemButtion($item, itemData) {
   $item("#container1").onClick(() => {
-    wixLocation.to(`/courses-2?jobPostId=${itemData.jobPostId}`);
+    wixLocation.to(`/구인공고-상세보기?jobPostId=${itemData.jobPostId}`);
   })
 }
 
