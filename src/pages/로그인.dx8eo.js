@@ -4,6 +4,7 @@ import { fetch, getJSON } from 'wix-fetch';
 import { session } from "wix-storage-frontend";
 import wixLocation from 'wix-location-frontend';
 import wixWindowFrontend from "wix-window-frontend";
+import { resources } from 'wix-bookings.v1';
 
 $w.onReady(function () {
     // Write your JavaScript here
@@ -34,17 +35,23 @@ $w.onReady(function () {
                 $w("#text157").text = responseData.data.errorMessage;
               }
               else {
-                session.setItem("loginKey", responseData.data.accessToken);
-                $w("#text157").text = "로그인이 완료되었습니다.!"
-                if (formFactor == "Desktop") {
-                  $w("#button4").label = "로그아웃"
-                  $w("#button4").onClick(() => {
-                    session.removeItem("loginKey");
-                    $w("#button4").label = "로그인"
-                    wixLocation.to(`/`);
-                  })}
+                if (responseData.data.role == "ROLE_COMPANY") {
+                  $w("#text157").text = "잘못된 ID 접근입니다."
+                }
+                else {
+                  session.setItem("loginKey", responseData.data.accessToken);
+                  $w("#text157").text = "로그인이 완료되었습니다.!"
+                  if (formFactor == "Desktop") {
+                    $w("#button4").label = "로그아웃"
+                    $w("#button4").onClick(() => {
+                      session.removeItem("loginKey");
+                      $w("#button4").label = "로그인"
+                      wixLocation.to(`/`);
+                    })}
+                  
+                  wixLocation.to(`/`);
+                }
                 
-                wixLocation.to(`/`);
               }
         }
         catch (error) {
