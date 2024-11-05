@@ -148,7 +148,7 @@ function initItemWage($item, itemData) {
 }
 
 function initItemWorkingDate($item, itemData) {
-  $item("#text2").text = itemData.startDate + " ~ " + itemData.endDate;
+  $item("#text2").text = itemData.startDate + " - " + itemData.endDate;
 }
 
 function initItemTech($item, itemData) {

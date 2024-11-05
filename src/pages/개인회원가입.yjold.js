@@ -136,6 +136,10 @@ $w.onReady(function () {
             const responseData = await smsResponse.json()
             authPhoneCode = responseData.data.authCode
             console.log(authPhoneCode);
+            if(authPhoneCode) {
+                $w("#text154").show()
+                $w("#text154").text = "SMS로 인증번호가 발송되었습니다."
+            }
         }
         else {
             $w("#text154").show()
