@@ -9,10 +9,10 @@ $w.onReady(async function () {
     var loginKey = session.getItem("loginKey");
     let formFactor = wixWindowFrontend.formFactor; 
     if(loginKey) {
-      $w("#button10").label = "로그아웃"
+      $w("#button10").label = "구인공고"
       $w("#button4").label = "로그아웃"
       $w("#mobileButton3").label = "로그아웃"
-      $w("#mobileButton1").label = "로그아웃"
+      $w("#mobileButton1").label = "구인공고"
       $w("#mobileButton2").label = "내 정보"
 
       // $w("#mobileButton2").onClick(() => {
@@ -80,7 +80,7 @@ $w.onReady(async function () {
           wixLocation.to(`/로그인`);
         })
         $w("#mobileButton1").onClick(() => {
-          wixLocation.to(`/로그인`);
+          wixLocation.to(`/구인공고`);
         })
         // $w("#button4").onClick(() => {
         //   wixLocation.to(`/로그인`);
@@ -89,7 +89,7 @@ $w.onReady(async function () {
       }
       else {
         $w("#button10").onClick(() => {
-          wixLocation.to(`/로그인`);
+          wixLocation.to(`/구인공고`);
         })
         $w("#button4").onClick(() => {
           wixLocation.to(`/로그인`);
