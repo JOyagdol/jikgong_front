@@ -124,6 +124,8 @@ $w.onReady(function () {
         let phoneNum = $w("#input1").value
         joinData.phone = phoneNum
         if(validatePhoneNumber(phoneNum)) {
+            $w("#text154").show()
+            $w("#text154").text = "SMS로 인증번호가 발송되었습니다."
             const smsurl = "https://asdfdsas.p-e.kr/api/join/sms-verification"
             const data = {phone:phoneNum}
             const smsResponse = await fetch(smsurl, {
@@ -137,8 +139,6 @@ $w.onReady(function () {
             authPhoneCode = responseData.data.authCode
             console.log(authPhoneCode);
             
-            $w("#text154").show()
-            $w("#text154").text = "SMS로 인증번호가 발송되었습니다."
             
         }
         else {
