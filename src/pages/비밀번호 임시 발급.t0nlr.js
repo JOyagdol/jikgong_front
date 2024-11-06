@@ -59,7 +59,6 @@ $w.onReady(function () {
             $w("#button22").style.backgroundColor = "rgba(57,113,255,1.0)"
             $w("#text157").show()
             $w("#text156").show()
-            $w("#text157").text = responseSearchIdData.data.temporaryPassword
         }
     })
 

@@ -195,6 +195,7 @@ $w.onReady(async function () {
         })
         var changePWResponseData = await changePWResponse.json()
         $w("#button27").label = "비밀번호 변경 되었습니다."
+        $w("#button27").style.backgroundColor = "rgba(57,113,255,1.0)"
         console.log(changePWResponseData)
        }
     })
