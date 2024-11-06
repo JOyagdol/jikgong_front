@@ -80,6 +80,9 @@ async function render(){
     currentPage--;
   }
   else {
+    if(data.content.length <= 7) {
+      $w("#nextButton").disable();
+    }
     $w("#currentPageText").text = `${currentPage + 1}`;
     for(let i=0;i < data.content.length;i++) {
       data.content[i]._id = `${i+1}`
