@@ -138,8 +138,6 @@ $w.onReady(function () {
             const responseData = await smsResponse.json()
             authPhoneCode = responseData.data.authCode
             console.log(authPhoneCode);
-            
-            
         }
         else {
             $w("#text154").show()
@@ -305,8 +303,7 @@ $w.onReady(function () {
                 console.log(responseJoinData)
                 if (responseJoinData.message == "노동자 회원 가입 완료") {
                     $w("#button21").label = responseJoinData.message
-                    
-                    setTimeout(() => wixLocation.to(`/로그인`),3000)
+                    wixWindow.openLightbox("회원가입");
                 }
                 else {
                     $w("#button21").label = "회원 가입 오류 : 재작성 및 재시도 부탁드립니다."
@@ -326,5 +323,5 @@ function formatDate(date) {
     const month = ('0' + (date.getMonth() + 1)).slice(-2); 
     const day = ('0' + date.getDate()).slice(-2); 
 
-    return `${year}-${month}-${day}`;
+    return `${year}${month}${day}`;
 }
