@@ -1,7 +1,6 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
 
-import {sendEmail} from 'backend/email'
 import { session } from 'wix-storage-frontend';
 import wixLocation from 'wix-location-frontend';
 
