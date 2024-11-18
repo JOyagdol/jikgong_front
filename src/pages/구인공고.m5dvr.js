@@ -80,15 +80,15 @@ async function render(){
     currentPage--;
   }
   else {
-    if(data.content.length <= 7) {
-      $w("#nextButton").disable();
-    }
     $w("#currentPageText").text = `${currentPage + 1}`;
     for(let i=0;i < data.content.length;i++) {
       data.content[i]._id = `${i+1}`
     }
     $w("#listRepeater").data = []
     $w("#listRepeater").data = data.content;
+  }
+  if(data.content.length <= 7) {
+    $w("#nextButton").disable();
   }
   if (currentPage == 0) {
     $w("#prevButton").disable();
@@ -161,7 +161,7 @@ function initItemTech($item, itemData) {
 
 function initItemButtion($item, itemData) {
   $item("#container1").onClick(() => {
-    wixLocation.to(`/courses-2?jobPostId=${itemData.jobPostId}`);
+    wixLocation.to(`/구인공고-상세보기?jobPostId=${itemData.jobPostId}`);
   })
 }
 
