@@ -85,6 +85,7 @@ async function render(){
       data.content[i]._id = `${i+1}`
     }
     $w("#listRepeater").data = []
+    console.log(data.content)
     $w("#listRepeater").data = data.content;
   }
   if(data.content.length <= 7) {
@@ -97,7 +98,7 @@ async function render(){
 
 function initRepeater() {
   $w("#listRepeater").onItemReady(($item, itemData, index) => {
-    //initItemBackground($item, itemData)
+    initItemBackground($item, itemData)
 
     initItemWorkingDate($item, itemData)
     initItemTech($item, itemData)
@@ -117,7 +118,12 @@ function initItemTitle($item, itemData) {
 }
 
 function initItemBackground($item, itemData) {
-  $item("#image1").background.src = itemData.thumbnailS3Url;
+  if(itemData.thumbnailResizeUrl != "null") {
+    $item("#image1").src = itemData.thumbnailResizeUrl;
+  }
+  else {
+    $item("#image1").src = "https://static.wixstatic.com/media/6bf690_be5549835f0645d0a31db8f6c3fa9260~mv2.png";
+  }
 }
 
 function initItemConvenienceTag($item, itemData) {

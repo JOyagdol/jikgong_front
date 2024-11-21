@@ -21,6 +21,15 @@ $w.onReady(async function () {
       });
     
     console.log(data);
+
+    //image
+    if (data.imageUrls.length == 0) {
+      $w("#image1").src = "https://static.wixstatic.com/media/6bf690_be5549835f0645d0a31db8f6c3fa9260~mv2.png";
+    }
+    else {
+      $w("#image1").src = data.imageUrls[0]
+    }
+
     // title
     $w("#text126").text = data.title;
     $w("#text136").text = data.title;
