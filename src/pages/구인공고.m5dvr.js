@@ -118,7 +118,7 @@ function initItemTitle($item, itemData) {
 }
 
 function initItemBackground($item, itemData) {
-  if(itemData.thumbnailResizeUrl != "null") {
+  if(itemData.thumbnailResizeUrl != null) {
     $item("#image1").src = itemData.thumbnailResizeUrl;
   }
   else {
