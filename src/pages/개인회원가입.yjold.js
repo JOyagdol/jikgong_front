@@ -262,6 +262,14 @@ $w.onReady(function () {
             return false;
         }
 
+        joinData.email = $w("#input13").value;
+        if(!joinData.email) {
+            checkJoinData = "false"
+            $w("#button21").label = "이메일을 입력해주세요."
+            return false;
+        }
+
+
         $w("#section1").collapse()
         $w("#section2").expand()
 
