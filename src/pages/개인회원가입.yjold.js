@@ -278,6 +278,7 @@ $w.onReady(function () {
         joinData.longitude = address.location.longitude
     
         let rrn = $w("#input7").value + "-" + $w("#input8").value
+
         joinData.rrn = rrn
         if(!$w("#input7").value || !$w("#input8").value) {
             checkJoinData = "false"
@@ -285,10 +286,22 @@ $w.onReady(function () {
             return false;
         }
 
+        if(!validateRRN(rrn)) {
+            checkJoinData = "false"
+            $w("#button21").label = "주민등록번호를 형식에 맞게 입력해주세요."
+            return false;      
+        }
+
         joinData.email = $w("#input13").value;
         if(!joinData.email) {
             checkJoinData = "false"
             $w("#button21").label = "이메일을 입력해주세요."
+            return false;
+        }
+
+        if(!validateEmail(joinData.email)) {
+            checkJoinData = "false"
+            $w("#button21").label = "이메일을 형식에 맞게 입력해주세요."
             return false;
         }
 
@@ -386,4 +399,14 @@ function formatDate(date) {
     const day = ('0' + date.getDate()).slice(-2); 
 
     return `${year}${month}${day}`;
+}
+
+function validateRRN(rrn) {
+    var juminRegex=/^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-8][0-9]{6}$/
+    return juminRegex.test(rrn)
+}
+
+function validateEmail(email) {
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
+    return emailRegex.test(email)
 }
