@@ -24,15 +24,23 @@ var workExperienceTag = []
 var joinData = {}
 
 $w.onReady(function () {
+    let formFactor = wixWindow.formFactor;
+
     $w("#text154").hide()
     $w("#text167").hide()
     $w("#text170").hide()
 
     $w("#selectionTags2").options = workExperienceTag
     // visa
+    
+
+    if(formFactor == "Desktop") {
+        $w("#line10").collapse()
+       
+    }
     $w("#text171").collapse()
-    $w("#line10").collapse()
     $w("#checkbox1").collapse()
+   
 
     $w("#section2").collapse()
     $w("#section3").collapse()
@@ -204,6 +212,20 @@ $w.onReady(function () {
         }
     })
 
+    $w("#selectionTags1").onClick(() => {
+        let gender = $w("#selectionTags1").value
+        if(gender.length == 2) {
+            if(gender[0] == "MALE") {
+                $w("#selectionTags1").selectedIndices = [1]
+            }
+            else {
+                $w("#selectionTags1").selectedIndices = [0]
+            }
+
+        }
+    })
+
+
     $w("#button21").onClick((event) => {
         if(checkPhoneCode == "false") {
             $w("#text154").show()
@@ -235,6 +257,7 @@ $w.onReady(function () {
             return false;
         }
         
+
         let gender = $w("#selectionTags1").value[0]
         joinData.gender = gender
         if(!joinData.gender) {

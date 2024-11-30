@@ -6,6 +6,8 @@ import wixLocation from 'wix-location-frontend';
 import wixWindowFrontend from "wix-window-frontend";
 
 $w.onReady(async function () {
+    $w("#section11").collapse()
+
     var loginKey = session.getItem("loginKey");
     let formFactor = wixWindowFrontend.formFactor; 
     if(loginKey) {
