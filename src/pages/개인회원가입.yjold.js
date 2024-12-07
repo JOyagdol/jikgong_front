@@ -18,6 +18,7 @@ var hasEducationCertificate = false;
 var hasWorkerCard = false;
 var privacyConsent = false;
 var credentialLiabilityConsent = false;
+var serviceConsent = false;
 
 var workExperienceRequest = []
 var workExperienceTag = []
@@ -95,6 +96,15 @@ $w.onReady(function () {
         }
         else {
             privacyConsent = false
+        }
+    })
+
+    $w("#checkbox6").onClick(() => {
+        if(serviceConsent == false) {
+            serviceConsent = true
+        }
+        else {
+            serviceConsent = false
         }
     })
 
@@ -363,6 +373,10 @@ $w.onReady(function () {
             if(!joinData.privacyConsent) {
                 checkJoinData = "false"
                 $w("#button30").label = "개인정보 수집 동의해주세요."
+            }
+            if(!serviceConsent) {
+                checkJoinData = "false"
+                $w("#button30").label = "서비스 이용 동의해주세요."
             }
             console.log(checkJoinData)
             if(checkJoinData == "true") {
