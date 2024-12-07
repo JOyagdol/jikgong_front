@@ -167,6 +167,7 @@ function initItemTech($item, itemData) {
 
 function initItemButtion($item, itemData) {
   $item("#container1").onClick(() => {
+    console.log(itemData.jobPostId)
     wixLocation.to(`/구인공고-상세보기?jobPostId=${itemData.jobPostId}`);
   })
 }
