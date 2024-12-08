@@ -6,6 +6,7 @@ import wixWindowFrontend from "wix-window-frontend";
 
 let currentPage = 0;
 const itemsPerPage = 8;
+var curJobPostId = [0,0,0,0,0,0,0,0];
 
 
 $w.onReady(async function () {
@@ -99,14 +100,14 @@ async function render(){
 function initRepeater() {
   $w("#listRepeater").onItemReady(($item, itemData, index) => {
     initItemBackground($item, itemData)
-
+    initJobPostId($item,itemData,index)
     initItemWorkingDate($item, itemData)
     initItemTech($item, itemData)
     initItemTitle($item, itemData)
     initItemAddress($item, itemData)
     initItemConvenienceTag($item, itemData)
     initItemWage($item, itemData)
-    initItemButtion($item, itemData)
+    initItemButtion($item, itemData, index)
     initItemCompany($item, itemData)
     initItemTime($item, itemData)
   });
@@ -165,11 +166,16 @@ function initItemTech($item, itemData) {
     $item("#text154").text = "모집"
 }
 
-function initItemButtion($item, itemData) {
-  $item("#container1").onClick(() => {
-    console.log(itemData.jobPostId)
-    wixLocation.to(`/구인공고-상세보기?jobPostId=${itemData.jobPostId}`);
+function initItemButtion($item, itemData, index) {
+  $item("#container1").onClick(async () => {
+    if(curJobPostId[index] == itemData.jobPostId) {
+      wixLocation.to(`/구인공고-상세보기?jobPostId=${itemData.jobPostId}`);
+    }
   })
+}
+
+function initJobPostId($item, itemData, index) {
+  curJobPostId[index] = itemData.jobPostId
 }
 
 function initItemCompany($item, itemData) {
