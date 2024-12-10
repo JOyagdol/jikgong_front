@@ -319,6 +319,8 @@ $w.onReady(function () {
         $w("#section1").collapse()
         $w("#section2").expand()
 
+        $w("#section2").scrollTo()
+
     })
 
     $w("#button27").onClick(() => {
@@ -326,6 +328,8 @@ $w.onReady(function () {
         joinData.workExperienceRequest = workExperienceRequest;
         $w("#section2").collapse()
         $w("#section3").expand()
+
+        $w("#section3").scrollTo()
     })
 
     $w("#button28").onClick(() => {
@@ -344,6 +348,8 @@ $w.onReady(function () {
 
         $w("#section3").collapse()
         $w("#section4").expand()
+
+        $w("#section4").scrollTo()
     })
 
 
