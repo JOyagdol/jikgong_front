@@ -39,6 +39,8 @@ $w.onReady(async function () {
     $w("#input1").disable();
     $w("#selectionTags2").options = [];
 
+    
+
     let myInfoUrl = "https://www.jikgong.p-e.kr/api/member-info/worker"
 
     const myInfoResponse = await fetch(myInfoUrl, {
@@ -56,17 +58,38 @@ $w.onReady(async function () {
 
     $w("#input3").value = responseData.data.workerName;
 
-    $w("#datePicker1").value = new Date(responseData.data.birth);
+
+    let year = parseInt(responseData.data.birth.substring(0,4));
+    let month = parseInt(responseData.data.birth.substring(4,6)) - 1;
+    let day = parseInt(responseData.data.birth.substring(6,8));
+
+    console.log(new Date(year,month,day))
+    $w("#datePicker1").value = new Date(year,month,day);
 
     $w("#dropdown1").value = responseData.data.nationality;
 
+    $w("#input14").value = responseData.data.email;
+
     
     if(responseData.data.gender == "MALE") {
-        $w("#selectionTags1").selectedIndices = [0,0]
+        $w("#selectionTags1").selectedIndices = [0]
     }
     else {
-        $w("#selectionTags1").selectedIndices = [0,1]
+        $w("#selectionTags1").selectedIndices = [1]
     }
+
+    $w("#selectionTags1").onClick(() => {
+        let gender = $w("#selectionTags1").value
+        if(gender.length == 2) {
+            if(gender[0] == "MALE") {
+                $w("#selectionTags1").selectedIndices = [1]
+            }
+            else {
+                $w("#selectionTags1").selectedIndices = [0]
+            }
+
+        }
+    })
 
     //주소 표시
     let addressUrl = "https://www.jikgong.p-e.kr/api/location/list"
@@ -128,6 +151,7 @@ $w.onReady(async function () {
         joinData.hasVisa = $w("#checkbox1").checked
         joinData.hasEducationCertificate = $w("#checkbox2").checked
         joinData.hasWorkerCard = $w("#checkbox3").checked
+        joinData.email = $w("#input14").value;
 
         joinData.workExperienceRequestList = workExperienceRequest;
 
