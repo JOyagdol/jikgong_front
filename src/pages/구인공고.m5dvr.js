@@ -45,7 +45,7 @@ async function render(){
   var meal_search = $w("#dropdown2").value;
   var park_search = $w("#dropdown3").value;
   var sort_serach = $w("#dropdown5").value;
-  var url = `https://asdfdsas.p-e.kr/api/job-post/worker/list?page=${currentPage}&size=${itemsPerPage}&`
+  var url = `https://www.jikgong.p-e.kr/api/job-post/worker/list?page=${currentPage}&size=${itemsPerPage}&`
   if(tech_search != null && tech_search != "") {
     url += `tech=${tech_search}&`
   }

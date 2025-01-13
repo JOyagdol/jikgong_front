@@ -148,7 +148,7 @@ $w.onReady(function () {
         if(validatePhoneNumber(phoneNum)) {
             $w("#text154").show()
             $w("#text154").text = "SMS로 인증번호가 발송되었습니다."
-            const smsurl = "https://asdfdsas.p-e.kr/api/join/sms-verification"
+            const smsurl = "https://www.jikgong.p-e.kr/api/join/sms-verification"
             const data = {phone:phoneNum}
             const smsResponse = await fetch(smsurl, {
                 method: "POST",
@@ -174,7 +174,7 @@ $w.onReady(function () {
             $w("#text154").text = "인증번호가 잘못되었습니다."
         }
         else {
-            const v_phoneUrl = "https://asdfdsas.p-e.kr/api/join/validation-phone"
+            const v_phoneUrl = "https://www.jikgong.p-e.kr/api/join/validation-phone"
             let phoneNum = joinData.phone
             const data = {phone:phoneNum}
             const phoneResponse = await fetch(v_phoneUrl, {
@@ -200,7 +200,7 @@ $w.onReady(function () {
 
     $w("#button24").onClick(async ()=> {
         let joinId = $w("#input10").value;
-        const v_idUrl = "https://asdfdsas.p-e.kr/api/join/validation-loginId"
+        const v_idUrl = "https://www.jikgong.p-e.kr/api/join/validation-loginId"
         const v_idData = {loginId:joinId}
         const vIdResponse = await fetch(v_idUrl, {
             method: "POST",
@@ -386,7 +386,7 @@ $w.onReady(function () {
             }
             console.log(checkJoinData)
             if(checkJoinData == "true") {
-                const joinUrl = "https://asdfdsas.p-e.kr/api/join/worker/join"
+                const joinUrl = "https://www.jikgong.p-e.kr/api/join/worker/join"
                 const joinResponse = await fetch(joinUrl, {
                     method: "POST",
                     headers: {

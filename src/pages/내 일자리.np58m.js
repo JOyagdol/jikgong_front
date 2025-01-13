@@ -36,7 +36,7 @@ function initComponents() {
   }
 
 async function render(){
-  const jobUrl = "https://asdfdsas.p-e.kr/api/apply/worker/future"
+  const jobUrl = "https://www.jikgong.p-e.kr/api/apply/worker/future"
 
   const jobResponse = await fetch(jobUrl, {
   method: "GET",
@@ -118,7 +118,7 @@ function initItemTitle($item, itemData) {
       let diff = workDate.getTime() - currentDate.getTime();
       diff = diff / (1000 * 60 * 60 * 24);
       if(diff >= 3 || diff < 0) {
-        const deleteUrl = "https://asdfdsas.p-e.kr/api/apply/worker/"+`${itemData.applyId}`
+        const deleteUrl = "https://www.jikgong.p-e.kr/api/apply/worker/"+`${itemData.applyId}`
         const deleteResponse = await fetch(deleteUrl, {
           method: "DELETE",
           headers: {

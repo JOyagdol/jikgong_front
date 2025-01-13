@@ -15,7 +15,7 @@ $w.onReady(async function () {
     var loginKey = session.getItem("loginKey");
     
     const query = wixLocation.query;
-    const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
+    const url = "https://www.jikgong.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
     var { data, message } = await getDataWithGetMethod({
         url: url,
       });
@@ -128,7 +128,7 @@ $w.onReady(async function () {
         let diff = workDate.getTime() - currentDate.getTime();
         diff = diff / (1000 * 60 * 60 * 24);
         if(diff >= 3 || diff < 0) {
-            const deleteUrl = "https://asdfdsas.p-e.kr/api/apply/worker/"+`${query.applyId}`
+            const deleteUrl = "https://www.jikgong.p-e.kr/api/apply/worker/"+`${query.applyId}`
             const deleteResponse = await fetch(deleteUrl, {
             method: "DELETE",
             headers: {

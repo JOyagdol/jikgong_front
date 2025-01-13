@@ -14,7 +14,7 @@ $w.onReady(async function () {
     let formFactor = wixWindowFrontend.formFactor; 
     var loginKey = session.getItem("loginKey");
     if(loginKey) {
-        const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
+        const url = "https://www.jikgong.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
         var { data, message } = await getDataWithGetMethod({
             url: url,
           });
@@ -31,7 +31,7 @@ $w.onReady(async function () {
         render(data)
     
         $w("#button21").onClick(async () => {
-            var applyUrl = "https://asdfdsas.p-e.kr/api/apply/worker"
+            var applyUrl = "https://www.jikgong.p-e.kr/api/apply/worker"
             var workDateList = [];
             for (const key in workDateActive) {
                 if(workDateActive[key] == "Active") {

@@ -15,7 +15,7 @@ $w.onReady(async function () {
     // Write your JavaScript here
     var loginKey = session.getItem("loginKey");
     const query = wixLocation.query;
-    const url = "https://asdfdsas.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
+    const url = "https://www.jikgong.p-e.kr/api/job-post/worker/"+`${query.jobPostId}`
     var { data, message } = await getDataWithGetMethod({
         url: url,
       });

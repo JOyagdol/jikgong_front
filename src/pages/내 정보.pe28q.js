@@ -39,7 +39,7 @@ $w.onReady(async function () {
     $w("#input1").disable();
     $w("#selectionTags2").options = [];
 
-    let myInfoUrl = "https://asdfdsas.p-e.kr/api/member-info/worker"
+    let myInfoUrl = "https://www.jikgong.p-e.kr/api/member-info/worker"
 
     const myInfoResponse = await fetch(myInfoUrl, {
         method: "GET",
@@ -69,7 +69,7 @@ $w.onReady(async function () {
     }
 
     //주소 표시
-    let addressUrl = "https://asdfdsas.p-e.kr/api/location/list"
+    let addressUrl = "https://www.jikgong.p-e.kr/api/location/list"
 
     const addressResponse = await fetch(addressUrl, {
         method: "GET",
@@ -155,7 +155,7 @@ $w.onReady(async function () {
             postLocation.longitude = address.location.longitude
             postLocation.isMain = true
 
-            const locationUrl = "https://asdfdsas.p-e.kr/api/location"
+            const locationUrl = "https://www.jikgong.p-e.kr/api/location"
             const locationResponse = await fetch(locationUrl, {
                 method: "POST",
                 headers: {
@@ -181,7 +181,7 @@ $w.onReady(async function () {
         $w("#button27").label = "비밀번호 재확인 해주세요."
        }
        else {
-        const changePWurl = "https://asdfdsas.p-e.kr/api/member-info/password-validation"
+        const changePWurl = "https://www.jikgong.p-e.kr/api/member-info/password-validation"
         const changePWResponse = await fetch(changePWurl, {
             method: "POST",
             headers: {

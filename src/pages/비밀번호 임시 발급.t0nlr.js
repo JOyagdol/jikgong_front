@@ -11,7 +11,7 @@ $w.onReady(function () {
         let id = $w("#input1").value
         phoneNum = $w("#input2").value
         if(validatePhoneNumber(phoneNum)) {
-            const smsurl = "https://asdfdsas.p-e.kr/api/member-info/password-verification"
+            const smsurl = "https://www.jikgong.p-e.kr/api/member-info/password-verification"
             let smsdata = {"loginId":id, "phone":phoneNum}
             const smsResponse = await fetch(smsurl, {
                 method: "POST",
@@ -38,7 +38,7 @@ $w.onReady(function () {
     $w("#button22").onClick(async () => {
         authCode = $w("#input3").value
 
-        const searchPWUrl = "https://asdfdsas.p-e.kr/api/member-info/password-temporary"
+        const searchPWUrl = "https://www.jikgong.p-e.kr/api/member-info/password-temporary"
         let searchPWData = {"phone":phoneNum,"authCode":authCode}
         const searchPWResponse = await fetch(searchPWUrl, {
             method: "POST",
