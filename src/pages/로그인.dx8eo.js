@@ -17,7 +17,7 @@ $w.onReady(function () {
         const password = $w('#input2').value;
         const loginUrl = "https://www.jikgong.p-e.kr/api/login"
         const data = {
-            loginId: id,
+            loginIdOrPhone: id,
             password: password,
             deviceToken: "string"
         }
