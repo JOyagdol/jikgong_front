@@ -86,7 +86,7 @@ async function render(){
       data.content[i]._id = `${i+1}`
     }
     $w("#listRepeater").data = []
-    console.log(data.content)
+
     $w("#listRepeater").data = data.content;
   }
   if(data.content.length <= 7) {
