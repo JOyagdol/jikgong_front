@@ -39,35 +39,41 @@ $w.onReady(async function () {
                 }
             }
             if(workDateList.length) {
-                var data = {
-                    jobPostId: Number(query.jobPostId),
-                    workDateList: workDateList
-                }
-                try {
-                    const applyResponse = await fetch(applyUrl, {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${loginKey}`
-                        },
-                        body: JSON.stringify(data)
-                      })
-                      const responseData = await applyResponse.json()
-                      console.log(responseData)
-                      if(responseData.message == "커스텀 예외 반환") {
-                        if (responseData.data.errorMessage == "만료된 access token 입니다.") {
-                            $w("#button21").label = "로그인 만료되었습니다. 재로그인 부탁드립니다."
+                let isChecked = await wixWindowFrontend.openLightbox("지원하기")
+                if(isChecked == true) {
+                    var data = {
+                        jobPostId: Number(query.jobPostId),
+                        workDateList: workDateList
+                    }
+                    try {
+                        const applyResponse = await fetch(applyUrl, {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${loginKey}`
+                            },
+                            body: JSON.stringify(data)
+                          })
+                          const responseData = await applyResponse.json()
+                          console.log(responseData)
+                          if(responseData.message == "커스텀 예외 반환") {
+                            if (responseData.data.errorMessage == "만료된 access token 입니다.") {
+                                $w("#button21").label = "로그인 만료되었습니다. 재로그인 부탁드립니다."
+                              }
+                              else if(responseData.data.errorMessage) {
+                                $w("#button21").label = responseData.data.errorMessage
+                              }
                           }
-                          else if(responseData.data.errorMessage) {
-                            $w("#button21").label = responseData.data.errorMessage
+                          else {
+                            wixLocation.to(`/내일자리`);
                           }
-                      }
-                      else {
-                        wixLocation.to(`/내일자리`);
-                      }
-                }
-                catch (error) {
-                    console.log('Error:',error)
+                    }
+                    catch (error) {
+                        console.log('Error:',error)
+                    }    
+                }                
+                else {
+                    $w("#button21").label = "이용 약관에 동의해주세요."
                 }
             }
             else {
