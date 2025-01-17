@@ -287,20 +287,20 @@ $w.onReady(function () {
         joinData.latitude = address.location.latitude
         joinData.longitude = address.location.longitude
     
-        let rrn = $w("#input7").value + "-" + $w("#input8").value
+        // let rrn = $w("#input7").value + "-" + $w("#input8").value
 
-        joinData.rrn = rrn
-        if(!$w("#input7").value || !$w("#input8").value) {
-            checkJoinData = "false"
-            $w("#button21").label = "주민등록번호를 입력해주세요."
-            return false;
-        }
+        // joinData.rrn = rrn
+        // if(!$w("#input7").value || !$w("#input8").value) {
+        //     checkJoinData = "false"
+        //     $w("#button21").label = "주민등록번호를 입력해주세요."
+        //     return false;
+        // }
 
-        if(!validateRRN(rrn)) {
-            checkJoinData = "false"
-            $w("#button21").label = "주민등록번호를 형식에 맞게 입력해주세요."
-            return false;      
-        }
+        // if(!validateRRN(rrn)) {
+        //     checkJoinData = "false"
+        //     $w("#button21").label = "주민등록번호를 형식에 맞게 입력해주세요."
+        //     return false;      
+        // }
 
         joinData.email = $w("#input13").value;
         if(!joinData.email) {
@@ -421,10 +421,10 @@ function formatDate(date) {
     return `${year}${month}${day}`;
 }
 
-function validateRRN(rrn) {
-    var juminRegex=/^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-8][0-9]{6}$/
-    return juminRegex.test(rrn)
-}
+// function validateRRN(rrn) {
+//     var juminRegex=/^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-8][0-9]{6}$/
+//     return juminRegex.test(rrn)
+// }
 
 function validateEmail(email) {
     var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
