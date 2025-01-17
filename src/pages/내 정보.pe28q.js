@@ -63,7 +63,6 @@ $w.onReady(async function () {
     let month = parseInt(responseData.data.birth.substring(4,6)) - 1;
     let day = parseInt(responseData.data.birth.substring(6,8));
 
-    console.log(new Date(year,month,day))
     $w("#datePicker1").value = new Date(year,month,day);
 
     $w("#dropdown1").value = responseData.data.nationality;
@@ -145,7 +144,7 @@ $w.onReady(async function () {
         joinData.workerName = $w("#input3").value;
         let birthDate = $w("#datePicker1").value
         joinData.birth = formatDate(birthDate);
-        joinData.rrn = formatRrn(birthDate);
+        // joinData.rrn = formatRrn(birthDate);
         joinData.gender = $w("#selectionTags1").value[0]
         joinData.nationality = $w("#dropdown1").value
         joinData.hasVisa = $w("#checkbox1").checked
