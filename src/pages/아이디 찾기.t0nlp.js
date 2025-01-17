@@ -12,6 +12,7 @@ $w.onReady(function () {
    $w("#text156").hide()
 
    $w("#button23").onClick(async () => {
+        $w("#button22").enable()
         let name = $w("#input1").value
         phoneNum = $w("#input2").value
         if(validatePhoneNumber(phoneNum)) {
@@ -96,6 +97,7 @@ function toggleTimer() {
         if (countdownTime <= 0) {
             clearInterval(timerInterval);
             $w("#button23").label = '인증번호';
+            $w("#button22").disable()
             //onTimerEnd(); // 타이머 종료 시 실행할 함수 호출
         }
 
