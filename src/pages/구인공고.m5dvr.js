@@ -4,7 +4,7 @@ import wixLocation from 'wix-location-frontend';
 import { session } from "wix-storage-frontend";
 import wixWindowFrontend from "wix-window-frontend";
 
-let currentPage = 0;
+let currentPage = 1;
 const itemsPerPage = 8;
 var curJobPostId = [0,0,0,0,0,0,0,0];
 
@@ -28,7 +28,7 @@ $w.onReady(async function () {
   });
 
   $w("#prevButton").onClick(() => {
-    if (currentPage > 0) {
+    if (currentPage > 1) {
       currentPage--;
       render();
     }
@@ -45,7 +45,7 @@ async function render(){
   var meal_search = $w("#dropdown2").value;
   var park_search = $w("#dropdown3").value;
   var sort_serach = $w("#dropdown5").value;
-  var url = `https://www.jikgong.p-e.kr/api/job-post/worker/list?page=${currentPage}&size=${itemsPerPage}&`
+  var url = `https://www.jikgong.p-e.kr/api/job-post/worker/list?page=${currentPage-1}&size=${itemsPerPage}&`
   if(tech_search != null && tech_search != "") {
     url += `tech=${tech_search}&`
   }
@@ -79,9 +79,12 @@ async function render(){
   if(data.content.length == 0) {
     $w("#nextButton").disable();
     currentPage--;
+    if(currentPage == 0) {
+      $w("#Section1RegularSubtitle1").text = "현재 지원하고 있는 일자리가 없습니다."
+    }
   }
   else {
-    $w("#currentPageText").text = `${currentPage + 1}`;
+    $w("#currentPageText").text = `${currentPage}`;
     for(let i=0;i < data.content.length;i++) {
       data.content[i]._id = `${i+1}`
     }
@@ -92,7 +95,7 @@ async function render(){
   if(data.content.length <= 7) {
     $w("#nextButton").disable();
   }
-  if (currentPage == 0) {
+  if (currentPage == 1 || currentPage == 0) {
     $w("#prevButton").disable();
   }
 }
