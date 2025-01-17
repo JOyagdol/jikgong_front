@@ -147,6 +147,7 @@ $w.onReady(function () {
 
 
     $w("#button22").onClick(async () => {
+        $w("#button23").enable()
         let phoneNum = $w("#input1").value
         joinData.phone = phoneNum
         if(validatePhoneNumber(phoneNum)) {
@@ -459,6 +460,7 @@ function toggleTimer() {
             $w("#button22").label = '인증번호';
             $w("#text154").show()
             $w("#text154").text = "다시 인증번호 버튼을 눌러주세요.";
+            $w("#button23").disable()
             //onTimerEnd(); // 타이머 종료 시 실행할 함수 호출
         }
 
