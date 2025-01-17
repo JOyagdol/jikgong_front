@@ -24,6 +24,10 @@ var workExperienceRequest = []
 var workExperienceTag = []
 var joinData = {}
 
+let countdownTime = 180; // 3분(180초)
+let timerInterval; // 타이머 인터벌 저장 변수
+
+
 $w.onReady(function () {
     let formFactor = wixWindow.formFactor;
 
@@ -160,6 +164,7 @@ $w.onReady(function () {
             const responseData = await smsResponse.json()
             authPhoneCode = responseData.data.authCode
             console.log(authPhoneCode);
+            toggleTimer();
         }
         else {
             $w("#text154").show()
@@ -429,4 +434,32 @@ function formatDate(date) {
 function validateEmail(email) {
     var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
     return emailRegex.test(email)
+}
+
+
+function toggleTimer() {
+    // 타이머 초기화
+    clearInterval(timerInterval);
+    countdownTime = 180;
+
+    // 타이머 실행
+    timerInterval = setInterval(() => {
+        // 분과 초 계산
+        const minutes = Math.floor(countdownTime / 60);
+        const seconds = countdownTime % 60;
+
+        // 텍스트 업데이트
+        $w("#button22").label = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+        // 시간이 끝났으면 타이머 정지
+        if (countdownTime <= 0) {
+            clearInterval(timerInterval);
+            $w("#button22").label = '인증번호';
+            $w("#text154").show()
+            $w("#text154").text = "다시 인증번호 버튼을 눌러주세요.";
+            //onTimerEnd(); // 타이머 종료 시 실행할 함수 호출
+        }
+
+        countdownTime--; // 1초 감소
+    }, 1000); // 1초마다 반복
 }
