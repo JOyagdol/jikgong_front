@@ -191,6 +191,8 @@ $w.onReady(function () {
             })
             const responsePhoneData = await phoneResponse.json()
             if(responsePhoneData.message == "사용 가능한 휴대폰 입니다.") {
+                clearInterval(timerInterval);
+                $w("#button22").label = '인증번호';
                 $w("#text154").show()
                 $w("#text154").text = "인증되었습니다."
                 checkPhoneCode = "true"
