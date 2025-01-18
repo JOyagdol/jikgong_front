@@ -40,7 +40,7 @@ $w.onReady(function () {
                 }
                 else {
                   session.setItem("loginKey", responseData.data.accessToken);
-                  $w("#text157").text = "로그인이 완료되었습니다.!"
+                  $w("#text157").text = "로그인이 완료되었습니다."
                   if (formFactor == "Desktop") {
                     $w("#button4").label = "로그아웃"
                     $w("#button4").onClick(() => {
