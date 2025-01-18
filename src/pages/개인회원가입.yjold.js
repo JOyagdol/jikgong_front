@@ -29,6 +29,13 @@ let timerInterval; // 타이머 인터벌 저장 변수
 
 
 $w.onReady(function () {
+    // 주민등록번호 비활성화
+    $w("#text160").collapse()
+    $w("#input7").collapse()
+    $w("#text161").collapse()
+    $w("#input8").collapse()
+
+
     let formFactor = wixWindow.formFactor;
 
     $w("#text154").hide()
