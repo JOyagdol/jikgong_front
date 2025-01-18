@@ -65,6 +65,7 @@ $w.onReady(async function () {
                               }
                           }
                           else {
+                            $w("#button21").label = "지원 완료되었습니다."
                             wixLocation.to(`/내일자리`);
                           }
                     }
